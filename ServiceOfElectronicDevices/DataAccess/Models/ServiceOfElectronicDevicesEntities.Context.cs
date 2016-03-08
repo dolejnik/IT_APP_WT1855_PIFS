@@ -29,5 +29,8 @@ namespace DataAccess.Models
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Devices> Devices { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<TaskProgress> TaskProgress { get; set; }
     }
 }

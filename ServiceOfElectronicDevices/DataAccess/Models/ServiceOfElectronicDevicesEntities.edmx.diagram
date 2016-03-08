@@ -5,13 +5,19 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="fa8aa5f94ced4e668d3884db38854ea4" Name="Diagram1">
-        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.AspNetUserClaims" Width="1.5" PointX="0.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.AspNetUserLogins" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.Devices" Width="1.5" PointX="7.75" PointY="3.25" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.Orders" Width="1.5" PointX="5.5" PointY="1.375" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.TaskProgress" Width="1.5" PointX="7.625" PointY="0.5" />
+        <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__UserId__4D94879B" />
+        <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__DeviceId__4E88ABD4" />
+        <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__4F7CD00D" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

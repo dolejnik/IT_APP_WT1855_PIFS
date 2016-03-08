@@ -66,6 +66,9 @@
     <Build Include="dbo\Tables\AspNetUserRoles.sql" />
     <Build Include="dbo\Tables\AspNetUsers.sql" />
     <Build Include="dbo\Tables\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\Orders.sql" />
+    <Build Include="dbo\Tables\Devices.sql" />
+    <Build Include="dbo\Tables\TaskProgress.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />

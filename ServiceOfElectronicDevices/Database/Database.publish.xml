@@ -2,9 +2,9 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
-    <TargetDatabaseName>ServiceOfElectronicDevicesDataBase</TargetDatabaseName>
+    <TargetDatabaseName>soeddb</TargetDatabaseName>
     <DeployScriptFileName>Database.sql</DeployScriptFileName>
-    <TargetConnectionString>Data Source=tcp:soeddb.database.windows.net;User ID=ServiceOfElectronicDevicesuser@soeddb;Pooling=False</TargetConnectionString>
+    <TargetConnectionString>Data Source=tcp:soeddb.database.windows.net;User ID=dbUser@soeddb;Pooling=False</TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
   </PropertyGroup>
 </Project>

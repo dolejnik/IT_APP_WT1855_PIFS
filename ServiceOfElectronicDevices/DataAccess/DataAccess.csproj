@@ -63,6 +63,12 @@
     <Compile Include="Models\AspNetUsers.cs">
       <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Devices.cs">
+      <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Orders.cs">
+      <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ServiceOfElectronicDevicesEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -77,6 +83,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ServiceOfElectronicDevicesEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskProgress.cs">
+      <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
