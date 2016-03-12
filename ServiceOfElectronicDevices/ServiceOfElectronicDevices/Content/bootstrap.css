@@ -6245,7 +6245,7 @@ body.modal-open,
 }
 
 @-ms-viewport {
-  width: device-width;
+  width: model-width;
 }
 
 @media screen and (max-width: 400px) {

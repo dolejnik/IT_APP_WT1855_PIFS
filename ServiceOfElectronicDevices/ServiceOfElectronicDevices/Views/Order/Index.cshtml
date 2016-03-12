@@ -1,0 +1,18 @@
+﻿@model BusinessLogic.Models.OrderViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.ActionLink("Add order", "AddOrder", "Order", new { @class = "btn btn-default" })
+
+<h2>Orders</h2>
+
+<dl class="dl-horizontal">
+    @foreach (var order in Model.Orders)
+    {
+        <dt>@order.ClientName</dt>
+        <dd>@order.DeviceBrand  @order.DeviceModel</dd>
+    }
+</dl>

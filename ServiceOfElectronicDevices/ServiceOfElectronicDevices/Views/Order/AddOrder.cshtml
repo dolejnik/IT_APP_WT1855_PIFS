@@ -1,0 +1,34 @@
+﻿@model ServiceOfElectronicDevices.Models.AddOrderViewModel
+
+@{
+    ViewBag.Title = "AddOrder";
+}
+
+<h2>AddOrder</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h4>Dodaj zgłoszenie.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.Label("Clients: ", new { @class = "col-md-1 control-label" })
+        <div class="col-md-11">
+            @Html.DropDownListFor(m => m.UserId, Model.Users)
+            @Html.ActionLink("Add client", "Register", "Account", null, new {@class = "btn btn-default"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Devices", new { @class = "col-md-1 control-label" })
+        <div class="col-md-11">
+            @Html.DropDownListFor(m => m.DeviceId, Model.Devices)
+            @Html.ActionLink("Add device", "AddDevice", "Order", new { @class = "btn btn-default" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-1 col-md-10">
+            <input type="submit" class="btn btn-default" value="Add" />
+        </div>
+    </div>
+}

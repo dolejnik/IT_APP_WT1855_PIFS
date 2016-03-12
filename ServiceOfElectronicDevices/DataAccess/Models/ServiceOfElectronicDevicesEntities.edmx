@@ -84,7 +84,7 @@
           <Property Name="DateFrom" Type="datetime" Nullable="false" />
           <Property Name="DateTo" Type="datetime" />
         </EntityType>
-        <Association Name="FK__Orders__DeviceId__4E88ABD4">
+        <Association Name="FK__Orders__DeviceId__48CFD27E">
           <End Role="Devices" Type="Self.Devices" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -96,7 +96,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__UserId__4D94879B">
+        <Association Name="FK__Orders__UserId__47DBAE45">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -108,7 +108,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TaskProgr__Order__4F7CD00D">
+        <Association Name="FK__TaskProgr__Order__49C3F6B7">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="TaskProgress" Type="Self.TaskProgress" Multiplicity="*" />
           <ReferentialConstraint>
@@ -185,15 +185,15 @@
           <EntitySet Name="Devices" EntityType="Self.Devices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskProgress" EntityType="Self.TaskProgress" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Orders__DeviceId__4E88ABD4" Association="Self.FK__Orders__DeviceId__4E88ABD4">
+          <AssociationSet Name="FK__Orders__DeviceId__48CFD27E" Association="Self.FK__Orders__DeviceId__48CFD27E">
             <End Role="Devices" EntitySet="Devices" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__UserId__4D94879B" Association="Self.FK__Orders__UserId__4D94879B">
+          <AssociationSet Name="FK__Orders__UserId__47DBAE45" Association="Self.FK__Orders__UserId__47DBAE45">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__TaskProgr__Order__4F7CD00D" Association="Self.FK__TaskProgr__Order__4F7CD00D">
+          <AssociationSet Name="FK__TaskProgr__Order__49C3F6B7" Association="Self.FK__TaskProgr__Order__49C3F6B7">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="TaskProgress" EntitySet="TaskProgress" />
           </AssociationSet>

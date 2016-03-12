@@ -97,7 +97,6 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
     <None Include="Models\ServiceOfElectronicDevicesEntities.edmx.diagram">
       <DependentUpon>ServiceOfElectronicDevicesEntities.edmx</DependentUpon>
     </None>
