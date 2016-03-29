@@ -1,11 +1,6 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.Internal;
 using BusinessLogic.Models;
 using DataAccess.Models;
 
@@ -27,8 +22,8 @@ namespace BusinessLogic.Services
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
-                Mapper.CreateMap<Devices, DevicesDto>();
-                return Mapper.Map<IEnumerable<DevicesDto>>(context.Devices.ToList());
+                var mapper = new MapperConfiguration(m => m.CreateMap<Devices, DevicesDto>()).CreateMapper();
+                return mapper.Map<IEnumerable<DevicesDto>>(context.Devices.ToList());
             }
         }
 
@@ -36,9 +31,10 @@ namespace BusinessLogic.Services
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
-                Mapper.CreateMap<AspNetUsers, AspNetUsersDto>();
+                var mapper = new MapperConfiguration(m => m.CreateMap<AspNetUsers, AspNetUsersDto>()).CreateMapper();
+
                 var users = context.AspNetUsers.ToList();
-                return Mapper.Map<IEnumerable<AspNetUsersDto>>(users);
+                return mapper.Map<IEnumerable<AspNetUsersDto>>(users);
             }
         }
 
@@ -46,9 +42,9 @@ namespace BusinessLogic.Services
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
-                //                Mapper.Initialize();
-                Mapper.CreateMap<DevicesDto, Devices>();
-                var device = Mapper.Map<Devices>(deviceDto);
+                var mapper = new MapperConfiguration(m => m.CreateMap<DevicesDto, Devices>()).CreateMapper();
+
+                var device = mapper.Map<Devices>(deviceDto);
                 context.Devices.Add(device);
                 context.SaveChanges();
             }

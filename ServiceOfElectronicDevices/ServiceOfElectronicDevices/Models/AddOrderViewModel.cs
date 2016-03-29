@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using BusinessLogic.Models;
 
 namespace ServiceOfElectronicDevices.Models
 {
@@ -12,8 +8,7 @@ namespace ServiceOfElectronicDevices.Models
         public string UserId { get; set; }
         public int DeviceId { get; set; }
 
-        public IEnumerable<System.Web.Mvc.SelectListItem> Users { get; set; }
+        public IEnumerable<SelectListItem> Users { get; set; }
         public IEnumerable<SelectListItem> Devices { get; set; }
-
     }
 }

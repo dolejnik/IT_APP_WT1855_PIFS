@@ -1,0 +1,43 @@
+﻿@using ServiceOfElectronicDevices.Models
+@model UserRolesViewModel
+
+@{
+    ViewBag.Title = "ManageUserRoles";
+}
+
+<h2>Manage User Roles</h2>
+<hr />
+
+<h2>Role Add to User</h2>
+
+@using (Html.BeginForm("AddRoleToUser", "UserRoles"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <p>
+        Username : @Html.DropDownListFor(m => m.UserId, Model.Users)
+        Role Name: @Html.DropDownListFor(m => m.Role, Model.Roles)
+    </p>
+
+    <input type="submit" value="Save" />
+}
+<hr/>
+
+<h2>Add Role</h2>
+@if (User.IsInRole("SuperAdmin"))
+{
+   using (Html.BeginForm("AddRole", "UserRoles"))
+   {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div>
+        Role name
+    </div>
+    <p>
+        @Html.TextBox("roleName")
+    </p>
+    <input type="submit" value="Save" />
+   }
+
+}

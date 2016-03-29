@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Devices]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, 
     [Brand] NVARCHAR(50) NOT NULL, 
     [Model] NVARCHAR(50) NOT NULL
 )

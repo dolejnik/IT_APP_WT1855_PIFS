@@ -16,7 +16,7 @@ namespace DataAccess.Models
     public partial class ServiceOfElectronicDevicesDataBaseEntities : DbContext
     {
         public ServiceOfElectronicDevicesDataBaseEntities()
-            : base("name=ServiceConnection")
+            : base("name=ServiceOfElectronicDevicesDataBaseEntities")
         {
         }
     
