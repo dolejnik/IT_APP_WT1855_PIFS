@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,10 +18,40 @@ namespace Web
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
+            try
+            {
+                var msg = new MailMessage();
+
+                msg.To.Add(new MailAddress(message.Destination));
+                msg.From = new MailAddress("serviceofed@gmail.com");
+                msg.IsBodyHtml = true;
+                msg.Subject = message.Subject;
+                msg.Body = message.Body;
+                msg.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "serviceofed@gmail.com",
+                        Password = "!qaz2wsx"
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(msg);
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+       //     return Task.FromResult(0);
         }
     }
 

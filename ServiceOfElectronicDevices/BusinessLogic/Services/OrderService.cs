@@ -50,23 +50,6 @@ namespace BusinessLogic.Services
             }
         }
 
-        public OrderViewModel GetOrderList(string userId)
-        {
-            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
-            {
-                var orderList = context
-                    .Orders
-                    .Select(order => new OrderViewModel.Order
-                    {
-                        ClientName = order.AspNetUsers.UserName,
-                        DeviceModel = order.Devices.Model,
-                        DeviceBrand = order.Devices.Brand
-                    })
-                    .ToList();
-                return new OrderViewModel {Orders = orderList};
-            }
-        }
-
         public OrderViewModel GetOrderList()
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
@@ -81,6 +64,24 @@ namespace BusinessLogic.Services
                     })
                     .ToList();
                 return new OrderViewModel { Orders = orderList };
+            }
+        }
+
+        public OrderViewModel GetUserOrders(string userId)
+        {
+            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
+            {
+                var orderList = context
+                    .AspNetUsers
+                    .Find(userId)
+                    .Orders
+                    .Select(order => new OrderViewModel.Order()
+                    {
+                        DeviceModel = order.Devices.Model,
+                        DeviceBrand = order.Devices.Brand
+                    })
+                    .ToList();
+                return new OrderViewModel {Orders = orderList};
             }
         }
 

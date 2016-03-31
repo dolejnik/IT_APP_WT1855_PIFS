@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BusinessLogic.Services;
@@ -11,18 +8,25 @@ namespace ServiceOfElectronicDevices.Controllers.API
     public class OrdersController : ApiController
     {
         private readonly OrderService orderService;
-        public OrdersController(OrderService orderService)
+        private readonly TokenService tokenService;
+
+        public OrdersController(OrderService orderService, TokenService tokenService)
         {
             this.orderService = orderService;
+            this.tokenService = tokenService;
         }
 
-        public OrdersController() : this(new OrderService())
+        public OrdersController() : this(new OrderService(), new TokenService())
         {
         }
 
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(string token)
         {
-            var orders = orderService.GetOrderList();
+            var user = tokenService.CheckToken(token);
+            if (user == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Unauthorized));
+
+            var orders = orderService.GetUserOrders(user.Id);
             return Json(orders);
         }
     }

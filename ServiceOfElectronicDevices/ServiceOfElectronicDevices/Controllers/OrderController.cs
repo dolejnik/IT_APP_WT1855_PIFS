@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using BusinessLogic.Models;
 using BusinessLogic.Services;
-using Microsoft.AspNet.Identity;
 using ServiceOfElectronicDevices.Models;
 
 namespace ServiceOfElectronicDevices.Controllers
@@ -26,7 +22,7 @@ namespace ServiceOfElectronicDevices.Controllers
         // GET: Order
         public ActionResult Index()
         {
-            var model = orderService.GetOrderList(User.Identity.GetUserId());
+            var model = orderService.GetOrderList();
             return View(model);
         }
 
