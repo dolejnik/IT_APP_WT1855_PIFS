@@ -2,10 +2,12 @@
 using System.Web.Mvc;
 using BusinessLogic.Models;
 using BusinessLogic.Services;
+using Microsoft.AspNet.Identity;
 using ServiceOfElectronicDevices.Models;
 
 namespace ServiceOfElectronicDevices.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly OrderService orderService;
@@ -22,11 +24,12 @@ namespace ServiceOfElectronicDevices.Controllers
         // GET: Order
         public ActionResult Index()
         {
-            var model = orderService.GetOrderList();
+            var model = orderService.GetUserOrders(User.Identity.GetUserId());
             return View(model);
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddOrder()
         {
             var model = new AddOrderViewModel
@@ -38,6 +41,7 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddOrder(AddOrderViewModel model)
         {
             orderService.AddOrder(model.UserId, model.DeviceId);
@@ -45,12 +49,14 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddDevice()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddDevice(DevicesDto deviceDto)
         {
             orderService.AddDevice(deviceDto);

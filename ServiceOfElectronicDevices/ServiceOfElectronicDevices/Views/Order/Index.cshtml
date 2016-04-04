@@ -3,9 +3,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-@Html.ActionLink("Add order", "AddOrder", "Order", new { @class = "btn btn-default" })
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Add order", "AddOrder", "Order", new { @class = "btn btn-default" })
+}
 
 <h2>Orders</h2>
 
