@@ -14,7 +14,6 @@ namespace Web.Controllers
             var VMtest = new DevicesDto { Id = 2, Brand = "Motorola", Model = "Fajny" };
 
 
-
             return View(VMtest);
         }
 

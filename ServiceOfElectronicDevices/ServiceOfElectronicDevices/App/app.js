@@ -1,1 +1,1 @@
-﻿angular.module("app", ['AngularDemo.BeerController']);
+﻿angular.module("app", ['Web.BeerController']);
