@@ -5,3 +5,17 @@
 <h3>@ViewBag.Message</h3>
 
 <p>Use this area to provide additional information.</p>
+
+@section scripts{
+
+    <script src="~/Scripts/angular.js"</script>
+
+}
+
+<div ng-app="" class="row">
+
+    <input type="text" ng-model="name" />
+
+    {{name}}
+
+    </div>

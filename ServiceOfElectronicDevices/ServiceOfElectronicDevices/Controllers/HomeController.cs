@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,11 @@ namespace Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var VMtest = new DevicesDto { Id = 2, Brand = "Motorola", Model = "Fajny" };
+
+
+
+            return View(VMtest);
         }
 
         public ActionResult About()
