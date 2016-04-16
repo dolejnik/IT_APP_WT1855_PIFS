@@ -7,5 +7,6 @@ namespace BusinessLogic.Models
     {
         public OrderViewModel.Order Order { get; set; }
         public IEnumerable<TaskProgressDto> Tasks { get; set; }
+        public string Description { get; set; }
     }
 }

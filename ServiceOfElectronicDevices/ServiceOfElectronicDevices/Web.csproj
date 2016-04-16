@@ -1048,6 +1048,7 @@
     <Content Include="Views\UserRoles\ManageUserRoles.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Order\OrderDetails.cshtml" />
+    <Content Include="Views\Order\NewTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

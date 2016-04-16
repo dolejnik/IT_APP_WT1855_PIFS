@@ -63,6 +63,14 @@ namespace BusinessLogic.Services
             }
         }
 
+        public bool AuthorizeOrderOwner(string userId, int orderId)
+        {
+            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
+            {
+                return context.Orders.Find(orderId).AspNetUsers.Id == userId;
+            }
+        }
+
         public OrderViewModel GetOrderList()
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
@@ -71,6 +79,7 @@ namespace BusinessLogic.Services
                     .Orders
                     .Select(order => new OrderViewModel.Order
                     {
+                        Id = order.Id,
                         ClientName = order.AspNetUsers.UserName,
                         DeviceModel = order.Devices.Model,
                         DeviceBrand = order.Devices.Brand
@@ -119,10 +128,48 @@ namespace BusinessLogic.Services
                         DeviceModel = order.Devices.Model,
                         DeviceBrand = order.Devices.Brand
                     },
+                    Description = order.Description,
                     Tasks = mapper.Map<IEnumerable<TaskProgressDto>>(order.TaskProgress.ToList())
                 };
 
                 return model;
+            }
+        }
+
+        public TaskProgressDto GetLastTask(int orderId)
+        {
+            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
+            {
+                var mapper = new MapperConfiguration(m => m.CreateMap<TaskProgress, TaskProgressDto>()).CreateMapper();
+
+                var task = context.Orders
+                                  .Find(orderId)
+                                  .TaskProgress
+                                  .OrderBy(t => t.DateFrom)
+                                  .Last();
+
+                return mapper.Map<TaskProgressDto>(task);
+            }
+        }
+
+        public void AddTask(TaskProgressDto task)
+        {
+            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
+            {
+                var mapper = new MapperConfiguration(m => m.CreateMap<TaskProgressDto, TaskProgress>()).CreateMapper();
+
+                context.Orders
+                    .Find(task.OrderId)
+                    .TaskProgress
+                    .OrderBy(t => t.DateFrom)
+                    .Last()
+                    .DateTo = DateTime.Now;
+
+                task.DateFrom = DateTime.Now;
+                context.TaskProgress
+                    .Add(mapper.Map<TaskProgress>(task));
+
+                context.SaveChanges();
             }
         }
     }

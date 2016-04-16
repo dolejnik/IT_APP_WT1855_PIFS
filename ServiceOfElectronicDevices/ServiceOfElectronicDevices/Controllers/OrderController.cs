@@ -24,8 +24,18 @@ namespace ServiceOfElectronicDevices.Controllers
         // GET: Order
         public ActionResult Index()
         {
+            if (User.IsInRole("Admin"))
+                return RedirectToAction("AdminIndex");
+
             var model = orderService.GetUserOrders(User.Identity.GetUserId());
             return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult AdminIndex()
+        {
+            var model = orderService.GetOrderList();
+            return View("Index", model);
         }
 
         [HttpGet]
@@ -65,9 +75,27 @@ namespace ServiceOfElectronicDevices.Controllers
 
         public ActionResult OrderDetails(int id)
         {
-            var model = orderService.GetOrderDetails(id);
+            if (!User.IsInRole("Admin") && !orderService.AuthorizeOrderOwner(User.Identity.GetUserId(), id))
+                return RedirectToAction("Index");
 
+            var model = orderService.GetOrderDetails(id);
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult NewTask(int id)
+        {
+            var model = orderService.GetLastTask(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult NewTask(TaskProgressDto task)
+        {
+            orderService.AddTask(task);
+            return RedirectToAction("OrderDetails", new {id = task.OrderId});
         }
     }
 }
