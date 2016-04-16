@@ -1,0 +1,18 @@
+﻿@model BusinessLogic.Models.OrderDetailsViewModel
+
+@{
+    ViewBag.Title = "OrderDetails";
+}
+
+<h2>OrderDetails</h2>
+@Model.Order.ClientName
+@Model.Order.DeviceBrand
+@Model.Order.DeviceModel
+
+@foreach (var task in Model.Tasks)
+{
+    <div>
+        @task.DateFrom
+    </div>
+
+}

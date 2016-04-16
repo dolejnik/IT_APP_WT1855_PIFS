@@ -7,6 +7,7 @@ namespace ServiceOfElectronicDevices.Models
     {
         public string UserId { get; set; }
         public int DeviceId { get; set; }
+        public string Description { get; set; }
 
         public IEnumerable<SelectListItem> Users { get; set; }
         public IEnumerable<SelectListItem> Devices { get; set; }

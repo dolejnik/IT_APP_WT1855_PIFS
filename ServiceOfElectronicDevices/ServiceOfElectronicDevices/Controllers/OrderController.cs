@@ -44,7 +44,7 @@ namespace ServiceOfElectronicDevices.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddOrder(AddOrderViewModel model)
         {
-            orderService.AddOrder(model.UserId, model.DeviceId);
+            orderService.AddOrder(model.UserId, model.DeviceId, model.Description);
             return RedirectToAction("Index");
         }
 
@@ -61,6 +61,13 @@ namespace ServiceOfElectronicDevices.Controllers
         {
             orderService.AddDevice(deviceDto);
             return RedirectToAction("AddOrder");
+        }
+
+        public ActionResult OrderDetails(int id)
+        {
+            var model = orderService.GetOrderDetails(id);
+
+            return View(model);
         }
     }
 }

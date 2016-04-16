@@ -14,6 +14,7 @@
     @foreach (var order in Model.Orders)
     {
         <dt>@order.ClientName</dt>
-        <dd>@order.DeviceBrand  @order.DeviceModel</dd>
+        <dd>@order.DeviceBrand @order.DeviceModel</dd>
+        <dd>@Html.ActionLink("Szczegóły", "OrderDetails", "Order", new {id=order.Id}, null)</dd>
     }
 </dl>

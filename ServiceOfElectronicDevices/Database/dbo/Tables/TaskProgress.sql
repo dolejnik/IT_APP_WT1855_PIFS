@@ -6,5 +6,6 @@
     [Description] NVARCHAR(MAX) NULL, 
     [DateFrom] DATETIME NOT NULL, 
     [DateTo] DATETIME NULL, 
+    [Price] FLOAT NULL, 
     FOREIGN KEY (OrderId) REFERENCES Orders(Id) ON DELETE CASCADE
 )

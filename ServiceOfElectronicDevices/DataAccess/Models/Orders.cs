@@ -24,6 +24,7 @@ namespace DataAccess.Models
         public string UserId { get; set; }
         public int DeviceId { get; set; }
         public Nullable<double> Price { get; set; }
+        public string Description { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual Devices Devices { get; set; }

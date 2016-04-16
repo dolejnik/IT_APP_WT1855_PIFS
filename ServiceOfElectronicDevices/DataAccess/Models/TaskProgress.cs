@@ -20,6 +20,7 @@ namespace DataAccess.Models
         public string Description { get; set; }
         public System.DateTime DateFrom { get; set; }
         public Nullable<System.DateTime> DateTo { get; set; }
+        public Nullable<double> Price { get; set; }
     
         public virtual Orders Orders { get; set; }
     }

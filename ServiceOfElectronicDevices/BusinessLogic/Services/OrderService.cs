@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using BusinessLogic.Models;
@@ -8,12 +9,24 @@ namespace BusinessLogic.Services
 {
     public class OrderService
     {
-        public void AddOrder(string userId, int deviceId)
+        public void AddOrder(string userId, int deviceId, string description)
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
-                Orders order = new Orders { UserId = userId, DeviceId = deviceId };
+                Orders order = new Orders
+                {
+                    UserId = userId,
+                    DeviceId = deviceId,
+                    Description = description
+                };
                 context.Orders.Add(order);
+                TaskProgress taskProgress = new TaskProgress
+                {
+                    DateFrom = DateTime.Now,
+                    OrderId = order.Id,
+                    State = "Oczekuje"
+                };
+                context.TaskProgress.Add(taskProgress);
                 context.SaveChanges();
             }
         }
@@ -77,6 +90,8 @@ namespace BusinessLogic.Services
                     .Orders
                     .Select(order => new OrderViewModel.Order()
                     {
+                        Id = order.Id,
+                        ClientName = order.AspNetUsers.UserName,
                         DeviceModel = order.Devices.Model,
                         DeviceBrand = order.Devices.Brand
                     })
@@ -85,5 +100,30 @@ namespace BusinessLogic.Services
             }
         }
 
+        public OrderDetailsViewModel GetOrderDetails(int id)
+        {
+            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
+            {
+                var mapper = new MapperConfiguration(m => m.CreateMap<TaskProgress, TaskProgressDto>()).CreateMapper();
+
+                var order = context
+                    .Orders
+                    .Find(id);
+                
+                var model = new OrderDetailsViewModel()
+                {
+                    Order = new OrderViewModel.Order()
+                    {
+                        Id = order.Id,
+                        ClientName = order.AspNetUsers.UserName,
+                        DeviceModel = order.Devices.Model,
+                        DeviceBrand = order.Devices.Brand
+                    },
+                    Tasks = mapper.Map<IEnumerable<TaskProgressDto>>(order.TaskProgress.ToList())
+                };
+
+                return model;
+            }
+        }
     }
 }

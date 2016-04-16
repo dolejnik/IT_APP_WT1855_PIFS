@@ -8,6 +8,7 @@ namespace BusinessLogic.Models
 
         public class Order
         {
+            public int Id { get; set; }
             public string ClientName { get; set; }
             public string DeviceBrand { get; set; }
             public string DeviceModel { get; set; }

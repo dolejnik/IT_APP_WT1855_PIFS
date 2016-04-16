@@ -20,10 +20,16 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.Label("Devices", new { @class = "col-md-1 control-label" })
+        @Html.Label("Devices", new {@class = "col-md-1 control-label"})
         <div class="col-md-11">
             @Html.DropDownListFor(m => m.DeviceId, Model.Devices)
-            @Html.ActionLink("Add device", "AddDevice", "Order", new { @class = "btn btn-default" })
+            @Html.ActionLink("Add device", "AddDevice", "Order", new {@class = "btn btn-default"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Description", new { @class = "col-md-1 control-label" })
+        <div class="col-md-11">
+            @Html.TextBoxFor(m => m.Description)
         </div>
     </div>
     <div class="form-group">

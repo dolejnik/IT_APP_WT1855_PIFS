@@ -73,6 +73,7 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="DeviceId" Type="int" Nullable="false" />
           <Property Name="Price" Type="float" />
+          <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TaskProgress">
           <Key>
@@ -84,6 +85,7 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="DateFrom" Type="datetime" Nullable="false" />
           <Property Name="DateTo" Type="datetime" />
+          <Property Name="Price" Type="float" />
         </EntityType>
         <Association Name="FK__Orders__DeviceId__628FA481">
           <End Role="Devices" Type="Self.Devices" Multiplicity="1">
@@ -361,6 +363,7 @@
           <NavigationProperty Name="AspNetUsers" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__UserId__4D94879B" FromRole="Orders" ToRole="AspNetUsers" />
           <NavigationProperty Name="Devices" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__DeviceId__4E88ABD4" FromRole="Orders" ToRole="Devices" />
           <NavigationProperty Name="TaskProgress" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__4F7CD00D" FromRole="Orders" ToRole="TaskProgress" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TaskProgress">
           <Key>
@@ -373,6 +376,7 @@
           <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateTo" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Orders" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__4F7CD00D" FromRole="TaskProgress" ToRole="Orders" />
+          <Property Name="Price" Type="Double" />
         </EntityType>
         <Association Name="FK__Orders__UserId__4D94879B">
           <End Type="ServiceOfElectronicDevicesDataBaseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
@@ -482,6 +486,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="ServiceOfElectronicDevicesDataBaseModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -492,6 +497,7 @@
           <EntitySetMapping Name="TaskProgress">
             <EntityTypeMapping TypeName="ServiceOfElectronicDevicesDataBaseModel.TaskProgress">
               <MappingFragment StoreEntitySet="TaskProgress">
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="DateTo" ColumnName="DateTo" />
                 <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
