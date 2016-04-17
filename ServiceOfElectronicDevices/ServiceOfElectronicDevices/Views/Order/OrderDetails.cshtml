@@ -15,26 +15,28 @@
 
 <table class="table">
     <thead>
-    <tr>
-        <th>Stan</th>
-        <th>Opis</th>
-        <th>Koszt</th>
-        <th>Data rozpoczęcia</th>
-        <th>Data zakończenia</th>
-    </tr>
+        <tr>
+            <th>Stan</th>
+            <th>Opis</th>
+            <th>Koszt</th>
+            <th>Data rozpoczęcia</th>
+            <th>Data zakończenia</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var task in Model.Tasks)
-    {
-        <tr>
-            <td>@task.State</td>
-            <td>@task.Description</td>
-            <td>@task.Price</td>
-            <td>@task.DateFrom</td>
-            <td>@task.DateTo</td>
-        </tr>
-    }
+        @foreach (var task in Model.Tasks)
+        {
+            <tr>
+                <td>@task.State</td>
+                <td>@task.Description</td>
+                <td>@task.Price</td>
+                <td>@task.DateFrom</td>
+                <td>@task.DateTo</td>
+            </tr>
+        }
     </tbody>
 </table>
-
-@Html.ActionLink("Aktualizuj", "NewTask", "Order", new {id=@Model.Order.Id}, null)
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Aktualizuj", "NewTask", "Order", new { id = @Model.Order.Id }, null)
+}

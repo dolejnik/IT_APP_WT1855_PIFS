@@ -43,13 +43,13 @@
                     <div class="form-group">
                         @Html.Label("Stan: ", new { @class = "col-md-1 control-label" })
                         <div class="col-md-11">
-                            @Html.TextBoxFor(m => m.State)
+                            @Html.TextBoxFor(m => m.State, new {@Value=""})
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.Label("Opis: ", new { @class = "col-md-1 control-label" })
                         <div class="col-md-11">
-                            @Html.TextBoxFor(m => m.Description)
+                            @Html.TextBoxFor(m => m.Description, new { @Value = "" })
                         </div>
                     </div>
                 </div>

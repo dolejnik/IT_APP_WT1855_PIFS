@@ -44,7 +44,7 @@ namespace ServiceOfElectronicDevices.Controllers
         {
             var model = new AddOrderViewModel
             {
-                Devices = orderService.GetDevicesList().Select(device => new SelectListItem {Text = $"{device.Brand} {device.Model}", Value = device.Brand}),
+                Devices = orderService.GetDevicesList().Select(device => new SelectListItem {Text = $"{device.Brand} {device.Model}", Value = device.Id.ToString()}),
                 Users = orderService.GetClientsList().Select(user => new SelectListItem {Text = user.UserName, Value = user.Id})
             };
             return View(model);
