@@ -12,6 +12,7 @@ namespace BusinessLogic.Models
             public string ClientName { get; set; }
             public string DeviceBrand { get; set; }
             public string DeviceModel { get; set; }
+            public TaskProgressDto CurrentState { get; set; }
         }
     }
 }
