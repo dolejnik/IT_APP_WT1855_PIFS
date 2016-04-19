@@ -69,6 +69,10 @@ namespace ServiceOfElectronicDevices.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddDevice(DevicesDto deviceDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(deviceDto);
+            }
             orderService.AddDevice(deviceDto);
             return RedirectToAction("AddOrder");
         }
@@ -94,6 +98,10 @@ namespace ServiceOfElectronicDevices.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult NewTask(TaskProgressDto task)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(task);
+            }
             orderService.AddTask(task);
             return RedirectToAction("OrderDetails", new {id = task.OrderId});
         }

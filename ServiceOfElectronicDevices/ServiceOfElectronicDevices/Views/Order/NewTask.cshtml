@@ -44,6 +44,7 @@
                         @Html.Label("Stan: ", new { @class = "col-md-1 control-label" })
                         <div class="col-md-11">
                             @Html.TextBoxFor(m => m.State, new {@Value=""})
+                            @Html.ValidationMessageFor(m => m.State, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
