@@ -24,14 +24,14 @@ namespace ServiceOfElectronicDevices.Controllers
         // GET: Order
         public ActionResult Index()
         {
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole("Employee"))
                 return RedirectToAction("AdminIndex");
 
             var model = orderService.GetUserOrders(User.Identity.GetUserId());
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employee")]
         public ActionResult AdminIndex()
         {
             var model = orderService.GetOrderList();
@@ -39,7 +39,7 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employee")]
         public ActionResult AddOrder()
         {
             var model = new AddOrderViewModel
@@ -51,7 +51,7 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employee")]
         public ActionResult AddOrder(AddOrderViewModel model)
         {
             orderService.AddOrder(model.UserId, model.DeviceId, model.Description);
@@ -59,14 +59,14 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employee")]
         public ActionResult AddDevice()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employee")]
         public ActionResult AddDevice(DevicesDto deviceDto)
         {
             if (!ModelState.IsValid)
@@ -87,7 +87,7 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employee")]
         public ActionResult NewTask(int id)
         {
             var model = orderService.GetLastTask(id);
@@ -95,7 +95,7 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employee")]
         public ActionResult NewTask(TaskProgressDto task)
         {
             if (!ModelState.IsValid)

@@ -25,23 +25,6 @@
 }
 <hr/>
 
-<h2>Add Role</h2>
-@if (User.IsInRole("SuperAdmin"))
-{
-   using (Html.BeginForm("AddRole", "UserRoles"))
-   {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    <div>
-        Role name
-    </div>
-    <p>
-        @Html.TextBox("roleName")
-    </p>
-    <input type="submit" value="Save" />
-   }
-
-}
 @*<h3>Get Roles for a User</h3>
 @using (Html.BeginForm("GetRoles", "UserRoles"))
 {
@@ -65,20 +48,19 @@
     </div>
 }*@
 
-@*<hr />
+<hr />
 <h3>Delete A User from a Role</h3>
 
-@using (Html.BeginForm("ManageUserRoles", "UserRoles"))
+@using (Html.BeginForm("RemoveRoleFromUser", "UserRoles"))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <p>
-        Username : @Html.DropDownListFor(m => m.UserId, Model.Users,new {onchange: })
-        Username : @Html.TextBox("UserName")
-        Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>) ViewBag.Roles, "Select ...")
+        Username : @Html.DropDownListFor(m => m.UserId, Model.Users)
+        Role Name: @Html.DropDownListFor(m => m.Role, Model.Roles)
 
     </p>
 
     <input type="submit" value="Delete this user from Role" />
-}*@
+}

@@ -3,12 +3,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BusinessLogic.Services;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using ServiceOfElectronicDevices.Models;
 using Web;
-using Web.Models;
 
 namespace ServiceOfElectronicDevices.Controllers
 {
@@ -55,30 +52,17 @@ namespace ServiceOfElectronicDevices.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddRoleToUser(UserRolesViewModel model)
         {
-            if (model.Role == "SuperAdmin")
-                return RedirectToAction("AddSuperAdmin", "UserRoles", model);
-
             await UserManager.AddToRoleAsync(model.UserId, model.Role);
             return RedirectToAction("ManageUserRoles", "UserRoles");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "SuperAdmin")]
-        public ActionResult AddRole(string roleName)
+        public async Task<ActionResult> RemoveRoleFromUser(UserRolesViewModel model)
         {
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            roleManager.Create(new IdentityRole(roleName));
-            return RedirectToAction("ManageUserRoles");
-        }
-
-        [Authorize(Roles = "SuperAdmin")]
-        public async Task<ActionResult> AddSuperAdmin(UserRolesViewModel model)
-        {
-            await UserManager.AddToRoleAsync(model.UserId, model.Role);
+            await UserManager.RemoveFromRoleAsync(model.UserId, model.Role);
             return RedirectToAction("ManageUserRoles", "UserRoles");
         }
     }
