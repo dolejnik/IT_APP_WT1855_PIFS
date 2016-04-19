@@ -10,11 +10,26 @@
 
 <h2>Orders</h2>
 
-<dl class="dl-horizontal">
-    @foreach (var order in Model.Orders)
-    {
-        <dt>@order.ClientName</dt>
-        <dd>@order.DeviceBrand @order.DeviceModel</dd>
-        <dd>@Html.ActionLink("Szczegóły", "OrderDetails", "Order", new {id=order.Id}, null)</dd>
-    }
-</dl>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Klient</th>
+            <th>Urządzenie</th>
+            <th>Stan</th>
+            <th>Data rozpoczęcia</th>
+            <th>Opis</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.ClientName</td>
+                <td>@order.DeviceBrand @order.DeviceModel</td>
+                <td>@order.CurrentState.State</td>
+                <td>@order.CurrentState.DateFrom</td>
+                <td>@order.CurrentState.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>

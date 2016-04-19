@@ -75,14 +75,17 @@ namespace BusinessLogic.Services
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
+                var mapper = new MapperConfiguration(m => m.CreateMap<TaskProgress, TaskProgressDto>()).CreateMapper();
                 var orderList = context
                     .Orders
+                    .ToList()
                     .Select(order => new OrderViewModel.Order
                     {
                         Id = order.Id,
                         ClientName = order.AspNetUsers.UserName,
                         DeviceModel = order.Devices.Model,
-                        DeviceBrand = order.Devices.Brand
+                        DeviceBrand = order.Devices.Brand,
+                        CurrentState = mapper.Map<TaskProgressDto>(order.TaskProgress.OrderBy(t => t.DateFrom).Last())
                     })
                     .ToList();
                 return new OrderViewModel { Orders = orderList };
