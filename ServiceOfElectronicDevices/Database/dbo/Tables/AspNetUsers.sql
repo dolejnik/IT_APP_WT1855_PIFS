@@ -12,6 +12,8 @@
 	[AccessFailedCount] [int] NOT NULL,
 	[UserName] [nvarchar](256) NOT NULL,
  [Token] NVARCHAR(128) NULL, 
+    [Name] NVARCHAR(50) NULL, 
+    [Comments] NVARCHAR(100) NULL, 
     CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

@@ -7,6 +7,10 @@
 <h2>OrderDetails</h2>
 <h3>
     @Model.Order.ClientName
+    @Model.Order.ClientEmail
+    @Model.Order.ClientPhone
+</h3>
+<h3>
     @Model.Order.DeviceBrand
     @Model.Order.DeviceModel
 </h3>
@@ -36,7 +40,7 @@
         }
     </tbody>
 </table>
-@if (User.IsInRole("Admin"))
+@if (User.IsInRole("Employee"))
 {
     @Html.ActionLink("Aktualizuj", "NewTask", "Order", new { id = @Model.Order.Id }, null)
 }

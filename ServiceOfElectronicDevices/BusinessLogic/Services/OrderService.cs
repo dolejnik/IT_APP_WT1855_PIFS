@@ -130,7 +130,9 @@ namespace BusinessLogic.Services
                     Order = new OrderViewModel.Order()
                     {
                         Id = order.Id,
-                        ClientName = order.AspNetUsers.UserName,
+                        ClientEmail = order.AspNetUsers.UserName,
+                        ClientName = order.AspNetUsers.Name,
+                        ClientPhone = order.AspNetUsers.PhoneNumber,
                         DeviceModel = order.Devices.Model,
                         DeviceBrand = order.Devices.Brand
                     },

@@ -79,7 +79,7 @@ namespace ServiceOfElectronicDevices.Controllers
 
         public ActionResult OrderDetails(int id)
         {
-            if (!User.IsInRole("Admin") && !orderService.AuthorizeOrderOwner(User.Identity.GetUserId(), id))
+            if (!User.IsInRole("Employee") && !orderService.AuthorizeOrderOwner(User.Identity.GetUserId(), id))
                 return RedirectToAction("Index");
 
             var model = orderService.GetOrderDetails(id);

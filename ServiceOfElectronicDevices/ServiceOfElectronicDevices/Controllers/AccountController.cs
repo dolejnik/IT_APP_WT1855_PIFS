@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using BusinessLogic.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -17,9 +18,11 @@ namespace Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private UserRolesService userRolesService;
 
         public AccountController()
         {
+            userRolesService = new UserRolesService();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -151,12 +154,12 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.Phone};
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
   //                  await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    userRolesService.AddUserData(user.Id, model.Name, model.Comments);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                      string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

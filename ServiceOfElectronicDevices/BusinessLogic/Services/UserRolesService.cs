@@ -28,5 +28,16 @@ namespace BusinessLogic.Services
                 context.SaveChanges();
             }
         }
+
+        public void AddUserData(string userId, string name, string comment)
+        {
+            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
+            {
+                var user = context.AspNetUsers.Find(userId);
+                user.Name = name;
+                user.Comments = comment;
+                context.SaveChanges();
+            }
+        }
     }
 }
