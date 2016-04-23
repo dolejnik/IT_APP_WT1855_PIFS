@@ -11,9 +11,20 @@
     @Scripts.Render("~/bundles/AngularCustom")
     <script src="~/Scripts/angular.min.js"></script>
 
+    <style>
+        #jumbo {
+    /* IE8 and below */
+    background: rgb(255, 255, 255);
+    /* all other browsers */
+    background: rgba(255, 255, 255, 0.05);
+}
+#white {
+    background: rgb(255, 255, 255);
+}
+    </style>
 
 </head>
-<body>
+<body background="~/Content/header.jpg">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -23,7 +34,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Serwis sprzętu elektronicznego", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-             </div>
+            </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Główna", "Index", "Home")</li>
