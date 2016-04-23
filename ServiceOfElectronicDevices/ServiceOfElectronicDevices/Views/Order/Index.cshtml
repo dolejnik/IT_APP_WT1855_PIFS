@@ -24,7 +24,12 @@
     <tbody>
         @foreach (var order in Model.Orders)
         {
-            <tr>
+            <tr @if (@order.CurrentState.State=="Odrzucono") {<text>class="danger"</text>}
+                    else if (@order.CurrentState.State=="Do odebrania") {<text>class="success"</text>}
+                    else if (@order.CurrentState.State=="Oczekuje") {<text>class="warning"</text>}
+                    else if (@order.CurrentState.State=="Diagnostyka") {<text>class="active"</text>}
+                    else {<text>class="info"</text>}
+                >
                 <td>@order.ClientName</td>
                 <td>@order.DeviceBrand @order.DeviceModel</td>
                 <td>@order.CurrentState.State</td>
