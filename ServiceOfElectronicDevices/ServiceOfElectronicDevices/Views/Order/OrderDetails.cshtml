@@ -4,20 +4,47 @@
     ViewBag.Title = "OrderDetails";
 }
 
-<h2>OrderDetails</h2>
-<h3>
-    @Model.Order.ClientName
-    @Model.Order.ClientEmail
-    @Model.Order.ClientPhone
-</h3>
-<h3>
-    @Model.Order.DeviceBrand
-    @Model.Order.DeviceModel
-</h3>
+<hr />
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Szczegóły zamówienia</h3>
+    </div>
 
-@Model.Description
+    <div class="panel-body">
 
-<table class="table">
+        @if (!(String.IsNullOrEmpty(@Model.Order.ClientName)))
+        {<text>Login: </text> @Model.Order.ClientName}
+
+        @if (!(String.IsNullOrEmpty(@Model.Order.ClientEmail)))
+        {<hr /><text>Email: </text> @Model.Order.ClientEmail}
+
+        @if (!(String.IsNullOrEmpty(@Model.Order.ClientPhone)))
+        {<hr /><text>Telefon: </text> @Model.Order.ClientPhone}
+
+        @if (!(String.IsNullOrEmpty(@Model.Order.DeviceBrand)))
+        {<hr /><text>Marka: </text> @Model.Order.DeviceBrand}
+
+        @if (!(String.IsNullOrEmpty(@Model.Order.DeviceModel)))
+        {<hr /><text>Model: </text> @Model.Order.DeviceModel}
+
+        @if (!(String.IsNullOrEmpty(@Model.Description)))
+        {<hr /><text>Opis: </text> @Model.Description}
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Stan</th>
