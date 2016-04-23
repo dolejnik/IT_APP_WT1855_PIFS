@@ -4,7 +4,7 @@
     ViewBag.Title = "title";
 }
 
-<h2>title</h2>
+<h2>Dodaj urządzenie:</h2>
 
 @using (Html.BeginForm("AddDevice", "Order", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -24,7 +24,10 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Add" class="btn btn-default" />
+            <input type="submit" value="Dodaj" class="btn btn-default" />
         </div>
-    </div>
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Powrót do zamówień", "AdminIndex", "Order", new { @class = "btn btn-default" })
+            </div>
+        </div>
 }

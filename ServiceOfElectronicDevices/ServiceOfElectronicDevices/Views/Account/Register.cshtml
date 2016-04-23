@@ -1,6 +1,6 @@
 ﻿@model Web.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Rejestracja nowego użytkownika";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -8,29 +8,30 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4>Stwórz nowe konto:</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})
+        <label class = "col-md-2 control-label">Email</label>
+        
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Name, new {@class = "col-md-2 control-label"})
+        <label class="col-md-2 control-label">Nazwa</label>
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Name, new {@class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Phone, new {@class = "col-md-2 control-label"})
+        <label class="col-md-2 control-label">Telefon</label>
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Phone, new {@class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Comments, new { @class = "col-md-2 control-label" })
+        <label class="col-md-2 control-label">Komentarz</label>
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Comments, new { @class = "form-control" })
         </div>
@@ -48,8 +49,13 @@
         </div>
     </div>*@
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+        <div  class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-success" value="Rejestruj" />
+            <div>
+                @Html.ActionLink("Powrót do zamówień", "AdminIndex", "Order", new { @class = "btn btn-default" })
+            </div>
+
+
         </div>
     </div>
 }

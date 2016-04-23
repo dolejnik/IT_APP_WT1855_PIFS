@@ -4,37 +4,35 @@
     ViewBag.Title = "AddOrder";
 }
 
-<h2>AddOrder</h2>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <h4>Dodaj zgłoszenie.</h4>
+    <h4>Dodaj zamówienie</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.Label("Clients: ", new { @class = "col-md-1 control-label" })
+        @Html.Label("Klienci: ", new { @class = "col-md-1 control-label" })
         <div class="col-md-11">
-            @Html.DropDownListFor(m => m.UserId, Model.Users)
-            @Html.ActionLink("Add client", "Register", "Account", null, new {@class = "btn btn-default"})
+            @Html.DropDownListFor(m => m.UserId, Model.Users, new { @class = "form-control" })
+            @Html.ActionLink("Dodaj klienta", "Register", "Account", null, new {@class = "btn btn-default"})
         </div>
     </div>
     <div class="form-group">
-        @Html.Label("Devices", new {@class = "col-md-1 control-label"})
+        @Html.Label("Urządzenie", new {@class = "col-md-1 control-label"})
         <div class="col-md-11">
-            @Html.DropDownListFor(m => m.DeviceId, Model.Devices)
-            @Html.ActionLink("Add device", "AddDevice", "Order", new {@class = "btn btn-default"})
+            @Html.DropDownListFor(m => m.DeviceId, Model.Devices, new { @class = "form-control" })
+            @Html.ActionLink("Dodaj urządzenie", "AddDevice", "Order", new {@class = "btn btn-default"})
         </div>
     </div>
     <div class="form-group">
-        @Html.Label("Description", new { @class = "col-md-1 control-label" })
+        @Html.Label("Opis awarii", new { @class = "col-md-1 control-label" })
         <div class="col-md-11">
-            @Html.TextBoxFor(m => m.Description)
+            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-1 col-md-10">
-            <input type="submit" class="btn btn-default" value="Add" />
+            <input type="submit" class="btn btn-success" value="Dodaj" />
         </div>
     </div>
 }

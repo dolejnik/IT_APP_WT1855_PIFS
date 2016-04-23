@@ -3,12 +3,12 @@
     ViewBag.Title = "Index";
 }
 
+<h2>Zamówienia:</h2>
+
 @if (User.IsInRole("Employee"))
 {
-    @Html.ActionLink("Add order", "AddOrder", "Order", new { @class = "btn btn-default" })
+    @Html.ActionLink("Dodaj zamówienie", "AddOrder", "Order", new { @class = "btn btn-default" })
 }
-
-<h2>Orders</h2>
 
 <table class="table">
     <thead>
