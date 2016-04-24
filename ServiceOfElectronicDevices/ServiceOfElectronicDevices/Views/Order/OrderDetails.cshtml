@@ -5,33 +5,35 @@
 }
 
 <hr />
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title">Szczegóły zamówienia</h3>
+<div style="color:black;opacity:0.9">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Szczegóły zamówienia</h3>
+        </div>
+
+        <div class="panel-body">
+
+            @if (!(String.IsNullOrEmpty(@Model.Order.ClientName)))
+            {<text>Login: </text> @Model.Order.ClientName}
+
+            @if (!(String.IsNullOrEmpty(@Model.Order.ClientEmail)))
+            {<hr /><text>Email: </text> @Model.Order.ClientEmail}
+
+            @if (!(String.IsNullOrEmpty(@Model.Order.ClientPhone)))
+            {<hr /><text>Telefon: </text> @Model.Order.ClientPhone}
+
+            @if (!(String.IsNullOrEmpty(@Model.Order.DeviceBrand)))
+            {<hr /><text>Marka: </text> @Model.Order.DeviceBrand}
+
+            @if (!(String.IsNullOrEmpty(@Model.Order.DeviceModel)))
+            {<hr /><text>Model: </text> @Model.Order.DeviceModel}
+
+            @if (!(String.IsNullOrEmpty(@Model.Description)))
+            {<hr /><text>Opis: </text> @Model.Description}
+
+        </div>
     </div>
 
-    <div class="panel-body">
-
-        @if (!(String.IsNullOrEmpty(@Model.Order.ClientName)))
-        {<text>Login: </text> @Model.Order.ClientName}
-
-        @if (!(String.IsNullOrEmpty(@Model.Order.ClientEmail)))
-        {<hr /><text>Email: </text> @Model.Order.ClientEmail}
-
-        @if (!(String.IsNullOrEmpty(@Model.Order.ClientPhone)))
-        {<hr /><text>Telefon: </text> @Model.Order.ClientPhone}
-
-        @if (!(String.IsNullOrEmpty(@Model.Order.DeviceBrand)))
-        {<hr /><text>Marka: </text> @Model.Order.DeviceBrand}
-
-        @if (!(String.IsNullOrEmpty(@Model.Order.DeviceModel)))
-        {<hr /><text>Model: </text> @Model.Order.DeviceModel}
-
-        @if (!(String.IsNullOrEmpty(@Model.Description)))
-        {<hr /><text>Opis: </text> @Model.Description}
-
-    </div>
-</div>
 
 
 
@@ -40,34 +42,39 @@
 
 
 
+    <div class="panel panel-info">
+
+        <div class="panel-body">
+
+            <table class="table table-striped" style="background-color:white">
+                <thead>
+                    <tr>
+                        <th>Stan</th>
+                        <th>Opis</th>
+                        <th>Koszt</th>
+                        <th>Data rozpoczęcia</th>
+                        <th>Data zakończenia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in Model.Tasks)
+            {
+                        <tr>
+                            <td>@task.State</td>
+                            <td>@task.Description</td>
+                            <td>@task.Price</td>
+                            <td>@task.DateFrom</td>
+                            <td>@task.DateTo</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (User.IsInRole("Employee"))
+            {
+                @Html.ActionLink("Aktualizuj", "NewTask", "Order", new { id = @Model.Order.Id }, null)
+            }
+                </div>
+            </div>
 
 
-
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Stan</th>
-            <th>Opis</th>
-            <th>Koszt</th>
-            <th>Data rozpoczęcia</th>
-            <th>Data zakończenia</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var task in Model.Tasks)
-        {
-            <tr>
-                <td>@task.State</td>
-                <td>@task.Description</td>
-                <td>@task.Price</td>
-                <td>@task.DateFrom</td>
-                <td>@task.DateTo</td>
-            </tr>
-        }
-    </tbody>
-</table>
-@if (User.IsInRole("Employee"))
-{
-    @Html.ActionLink("Aktualizuj", "NewTask", "Order", new { id = @Model.Order.Id }, null)
-}
+        </div>
