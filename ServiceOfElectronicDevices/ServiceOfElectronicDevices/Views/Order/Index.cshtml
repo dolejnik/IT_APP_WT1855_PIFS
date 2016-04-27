@@ -3,40 +3,44 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Zamówienia:</h2>
+<hr />
+<div class="panel panel-success" style="-ms-opacity:0.9; opacity:0.9; color:black">
+    <div class="panel-heading">
+        <h3 class="panel-title">Spis zamówień</h3>
+    </div>
 
-@if (User.IsInRole("Employee"))
-{
-    @Html.ActionLink("Dodaj zamówienie", "AddOrder", "Order", new { @class = "btn btn-default" })
-}
+    <div class="panel-body">
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Klient</th>
-            <th>Urządzenie</th>
-            <th>Stan</th>
-            <th>Data rozpoczęcia</th>
-            <th>Opis</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model.Orders)
+        @if (User.IsInRole("Employee"))
         {
-            <tr @if (@order.CurrentState.State=="Odrzucono") {<text>class="danger"</text>}
-                    else if (@order.CurrentState.State=="Do odebrania") {<text>class="success"</text>}
-                    else if (@order.CurrentState.State=="Oczekuje") {<text>class="warning"</text>}
-                    else if (@order.CurrentState.State=="Diagnostyka") {<text>class="active"</text>}
-                    else {<text>class="info"</text>}
-                >
-                <td>@order.ClientName</td>
-                <td>@order.DeviceBrand @order.DeviceModel</td>
-                <td>@order.CurrentState.State</td>
-                <td>@order.CurrentState.DateFrom</td>
-                <td>@order.CurrentState.Description</td>
-                <td>@Html.ActionLink("Szczegóły", "OrderDetails", "Order", new {id=order.Id}, null)</td>
-            </tr>
+            @Html.ActionLink("Dodaj zamówienie", "AddOrder", "Order", new { @class = "btn btn-default" })
         }
-    </tbody>
-</table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Klient</th>
+                    <th>Urządzenie</th>
+                    <th>Stan</th>
+                    <th>Data rozpoczęcia</th>
+                    <th>Opis</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.Orders)
+            {
+                    <tr @if (@order.CurrentState.State == "Odrzucono") { <text> class="danger" </text>     } else if (@order.CurrentState.State == "Do odebrania") { <text> class="success" </text>     } else if (@order.CurrentState.State == "Oczekuje") { <text> class="warning" </text>     } else if (@order.CurrentState.State == "Diagnostyka") { <text> class="active" </text>     } else { <text> class="info" </text>     }>
+                        <td>@order.ClientName</td>
+                        <td>@order.DeviceBrand @order.DeviceModel</td>
+                        <td>@order.CurrentState.State</td>
+                        <td>@order.CurrentState.DateFrom</td>
+                        <td>@order.CurrentState.Description</td>
+                        <td>@Html.ActionLink("Szczegóły", "OrderDetails", "Order", new { id = order.Id }, null)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <hr />
+    </div>
+</div>

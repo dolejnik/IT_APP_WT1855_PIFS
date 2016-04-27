@@ -1,28 +1,12 @@
-﻿using BusinessLogic.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using BusinessLogic.Services;
+﻿using System.Web.Mvc;
 
 namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-      private readonly OrderService orderService;
-
-        public HomeController()
-        {
-            this.orderService = new OrderService();
-        }
         public ActionResult Index()
         {
-            var VMtest = new DevicesDto { Id = 2, Brand = "Motorola", Model = "Fajny" };
-            var VMtest2 = orderService.GetOrderList();
-
-
-            return View(VMtest);
+            return View();
         }
 
         public ActionResult About()

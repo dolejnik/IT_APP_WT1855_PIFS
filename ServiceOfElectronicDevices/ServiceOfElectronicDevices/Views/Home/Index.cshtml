@@ -1,62 +1,67 @@
-﻿@model BusinessLogic.Models.DevicesDto
-
+﻿
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Twój serwis sprzętu elektronicznego";
 }
 
 <br />
-<div class="jumbotron" id="jumbo" ng-app="app" ng-controller="BeerCtrl">
+<div class="jumbotron" id="jumbo">
     <p>
-        <h1 style="color:white">Serwis sprzętu elektronicznego</h1>
+        <h1>Twój serwis sprzętu elektronicznego</h1>
 
-        <p class="text-muted">nowy@email.com  !23Qwe  ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="service-box">
-                    <p><span class="glyphicon glyphicon-user"style="font-size: 3.2em; color:white"></span></p>
-                    <p class="text-muted">Ponad stu pracowników czekającyh by Ci pomóc</p>
+        <p class="text-muted">Masz uszkodzony telefon lub nie radzisz sobie z instalacją oprogramowania? Nie działa tak szybko jak po kupnie? Nie mozesz połączyć się z internetem? A może wkradł się wirus? Rozwiążeny wszystkie Twoje problemy!</p>
+        <div class="span7 text-center">
+            @Html.ActionLink("Czytaj więcej", "About", "Home", new {@class="btn btn-primary btn-lg"})
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <p><span class="glyphicon glyphicon-user" style="font-size: 3.2em;"></span></p>
+                        <p class="text-muted">Ponad stu pracowników czekających by Ci pomóc</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="service-box">
-                    <p><span class="glyphicon glyphicon-wrench" style="font-size: 3.2em; color:white"></span></p>
-                    <p class="text-muted">Przeprowadziliśmy już ponad 1000 udanych napraw</p>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <p><span class="glyphicon glyphicon-wrench" style="font-size: 3.2em;"></span></p>
+                        <p class="text-muted">Przeprowadziliśmy już ponad 1000 udanych napraw</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="service-box">
-                    <p><span class="glyphicon glyphicon-ok" style="font-size: 3.2em; color:white"></span></p>
-                    <p class="text-muted">Jesteśmy w stanie Ci pomóc w 99% uszkodzeń</p>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <p><span class="glyphicon glyphicon-ok" style="font-size: 3.2em;"></span></p>
+                        <p class="text-muted">Jesteśmy w stanie Ci pomóc w 99% uszkodzeń</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="service-box">
-                    <p><span class="glyphicon glyphicon-comment" style="font-size: 3.2em; color:white"></span></p>
-                    <p class="text-muted">Możemy poinformować Cię zarówno online jak i mobilnie o statusie naprawy</p>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <p><span class="glyphicon glyphicon-comment" style="font-size: 3.2em;"></span></p>
+                        <p class="text-muted">Możemy poinformować Cię zarówno online jak i mobilnie o statusie naprawy</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    </p>
-</div>
+        </p>
+    </div>
 
 <div class="row" style="color:white">
     <div class="col-md-6">
         <h2>Dlaczego właśnie u nas warto serwisować swój sprzęt?</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Więcej &raquo;</a></p>
     </div>
     <div class="col-md-6">
         <h2>Najwyższa jakość usług potwierdzona certyfikatami</h2>
-        <p>Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. 
-        Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. 
-        Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <p>
+            Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. 
+            Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. 
+            Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Więcej &raquo;</a></p>
     </div>
 </div>
 
@@ -70,7 +75,7 @@
             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Więcej &raquo;</a></p>
     </div>
     <div class="col-md-6">
         <h2>Najwyższa jakość usług potwierdzona certyfikatami</h2>
@@ -79,6 +84,6 @@
             Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis.
             Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat.
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Więcej &raquo;</a></p>
     </div>
 </div>

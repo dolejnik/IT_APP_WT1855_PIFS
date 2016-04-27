@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DataAccess.Models;
 
 namespace BusinessLogic.Models
 {
