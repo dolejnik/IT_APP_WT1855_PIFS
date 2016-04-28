@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using BusinessLogic.Enums;
 
 namespace BusinessLogic.Models
 {
@@ -8,7 +9,7 @@ namespace BusinessLogic.Models
         public int Id { get; set; }
         public int OrderId { get; set; }
         [Required]
-        public string State { get; set; }
+        public OrderStates State { get; set; }
         public string Description { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime? DateTo { get; set; }

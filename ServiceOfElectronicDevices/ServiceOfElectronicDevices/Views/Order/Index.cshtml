@@ -1,4 +1,6 @@
-﻿@model BusinessLogic.Models.OrderViewModel
+﻿@using BusinessLogic.Enums
+@using ServiceOfElectronicDevices.Helpers
+@model BusinessLogic.Models.OrderViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -30,10 +32,10 @@
             <tbody>
                 @foreach (var order in Model.Orders)
             {
-                    <tr @if (@order.CurrentState.State == "Odrzucono") { <text> class="danger" </text>     } else if (@order.CurrentState.State == "Do odebrania") { <text> class="success" </text>     } else if (@order.CurrentState.State == "Oczekuje") { <text> class="warning" </text>     } else if (@order.CurrentState.State == "Diagnostyka") { <text> class="active" </text>     } else { <text> class="info" </text>     }>
+                    <tr @if (@order.CurrentState.State == OrderStates.Deleted) { <text> class="danger" </text>     } else if (@order.CurrentState.State == OrderStates.Ready) { <text> class="success" </text>     } else if (@order.CurrentState.State == OrderStates.WaitingForClient) { <text> class="warning" </text>     } else if (@order.CurrentState.State == OrderStates.Accepted) { <text> class="active" </text>     } else { <text> class="info" </text>     }>
                         <td>@order.ClientName</td>
                         <td>@order.DeviceBrand @order.DeviceModel</td>
-                        <td>@order.CurrentState.State</td>
+                        <td>@order.CurrentState.State.GetAttribute()</td>
                         <td>@order.CurrentState.DateFrom</td>
                         <td>@order.CurrentState.Description</td>
                         <td>@Html.ActionLink("Szczegóły", "OrderDetails", "Order", new { id = order.Id }, null)</td>

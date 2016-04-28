@@ -83,13 +83,13 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderId" Type="int" Nullable="false" />
-          <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="State" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="DateFrom" Type="datetime" Nullable="false" />
           <Property Name="DateTo" Type="datetime" />
           <Property Name="Price" Type="float" />
         </EntityType>
-        <Association Name="FK__Orders__DeviceId__628FA481">
+        <Association Name="FK__Orders__DeviceId__46E78A0C">
           <End Role="Devices" Type="Self.Devices" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -103,7 +103,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__UserId__619B8048">
+        <Association Name="FK__Orders__UserId__45F365D3">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -117,7 +117,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TaskProgr__Order__60A75C0F">
+        <Association Name="FK__TaskProgr__Order__44FF419A">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -196,15 +196,15 @@
           <EntitySet Name="Devices" EntityType="Self.Devices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskProgress" EntityType="Self.TaskProgress" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Orders__DeviceId__628FA481" Association="Self.FK__Orders__DeviceId__628FA481">
+          <AssociationSet Name="FK__Orders__DeviceId__46E78A0C" Association="Self.FK__Orders__DeviceId__46E78A0C">
             <End Role="Devices" EntitySet="Devices" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__UserId__619B8048" Association="Self.FK__Orders__UserId__619B8048">
+          <AssociationSet Name="FK__Orders__UserId__45F365D3" Association="Self.FK__Orders__UserId__45F365D3">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__TaskProgr__Order__60A75C0F" Association="Self.FK__TaskProgr__Order__60A75C0F">
+          <AssociationSet Name="FK__TaskProgr__Order__44FF419A" Association="Self.FK__TaskProgr__Order__44FF419A">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="TaskProgress" EntitySet="TaskProgress" />
           </AssociationSet>
@@ -333,7 +333,6 @@
           </AssociationSet>
           <EntitySet Name="Devices" EntityType="ServiceOfElectronicDevicesDataBaseModel.Devices" />
           <EntitySet Name="Orders" EntityType="ServiceOfElectronicDevicesDataBaseModel.Orders" />
-          <EntitySet Name="TaskProgress" EntityType="ServiceOfElectronicDevicesDataBaseModel.TaskProgress" />
           <AssociationSet Name="FK__Orders__UserId__4D94879B" Association="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__UserId__4D94879B">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Orders" EntitySet="Orders" />
@@ -342,7 +341,8 @@
             <End Role="Devices" EntitySet="Devices" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__TaskProgr__Order__4F7CD00D" Association="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__4F7CD00D">
+          <EntitySet Name="TaskProgress" EntityType="ServiceOfElectronicDevicesDataBaseModel.TaskProgress" />
+          <AssociationSet Name="FK__TaskProgr__Order__44FF419A" Association="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__44FF419A">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="TaskProgress" EntitySet="TaskProgress" />
           </AssociationSet>
@@ -366,21 +366,8 @@
           <Property Name="Price" Type="Double" />
           <NavigationProperty Name="AspNetUsers" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__UserId__4D94879B" FromRole="Orders" ToRole="AspNetUsers" />
           <NavigationProperty Name="Devices" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__DeviceId__4E88ABD4" FromRole="Orders" ToRole="Devices" />
-          <NavigationProperty Name="TaskProgress" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__4F7CD00D" FromRole="Orders" ToRole="TaskProgress" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="TaskProgress">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="OrderId" Type="Int32" Nullable="false" />
-          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateTo" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Orders" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__4F7CD00D" FromRole="TaskProgress" ToRole="Orders" />
-          <Property Name="Price" Type="Double" />
+          <NavigationProperty Name="TaskProgress" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__44FF419A" FromRole="Orders" ToRole="TaskProgress" />
         </EntityType>
         <Association Name="FK__Orders__UserId__4D94879B">
           <End Type="ServiceOfElectronicDevicesDataBaseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
@@ -406,8 +393,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TaskProgr__Order__4F7CD00D">
-          <End Type="ServiceOfElectronicDevicesDataBaseModel.Orders" Role="Orders" Multiplicity="1" />
+        <EntityType Name="TaskProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateTo" Type="DateTime" Precision="3" />
+          <Property Name="Price" Type="Double" />
+          <NavigationProperty Name="Orders" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__44FF419A" FromRole="TaskProgress" ToRole="Orders" />
+        </EntityType>
+        <Association Name="FK__TaskProgr__Order__44FF419A">
+          <End Type="ServiceOfElectronicDevicesDataBaseModel.Orders" Role="Orders" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="ServiceOfElectronicDevicesDataBaseModel.TaskProgress" Role="TaskProgress" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">

@@ -14,10 +14,10 @@
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.Devices" Width="1.5" PointX="7.75" PointY="3.25" />
         <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.Orders" Width="1.5" PointX="5.5" PointY="1.375" />
-        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.TaskProgress" Width="1.5" PointX="7.625" PointY="0.5" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__UserId__4D94879B" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__DeviceId__4E88ABD4" />
-        <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__4F7CD00D" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.TaskProgress" Width="1.5" PointX="7.75" PointY="0.5" />
+        <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__44FF419A" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

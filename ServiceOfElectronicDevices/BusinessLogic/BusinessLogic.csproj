@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\OrderStates.cs" />
     <Compile Include="Models\AspNetRolesDto.cs" />
     <Compile Include="Models\AspNetUsersDto.cs" />
     <Compile Include="Models\DevicesDto.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using BusinessLogic.Enums;
 using BusinessLogic.Models;
 using DataAccess.Models;
 
@@ -24,7 +25,7 @@ namespace BusinessLogic.Services
                 {
                     DateFrom = DateTime.Now,
                     OrderId = order.Id,
-                    State = "Oczekuje"
+                    State = (int)OrderStates.Accepted
                 };
                 context.TaskProgress.Add(taskProgress);
                 context.SaveChanges();
@@ -111,7 +112,7 @@ namespace BusinessLogic.Services
                         CurrentState = mapper.Map<TaskProgressDto>(order.TaskProgress.OrderBy(t => t.DateFrom).Last())
                     })
                     .ToList();
-                return new OrderViewModel {Orders = orderList};
+                return new OrderViewModel { Orders = orderList };
             }
         }
 
@@ -124,7 +125,7 @@ namespace BusinessLogic.Services
                 var order = context
                     .Orders
                     .Find(id);
-                
+
                 var model = new OrderDetailsViewModel()
                 {
                     Order = new OrderViewModel.Order()
@@ -174,8 +175,11 @@ namespace BusinessLogic.Services
                     .DateTo = DateTime.Now;
 
                 task.DateFrom = DateTime.Now;
+                if (task.State == OrderStates.Done || task.State == OrderStates.Deleted)
+                    task.DateTo = DateTime.Now;
+
                 context.TaskProgress
-                    .Add(mapper.Map<TaskProgress>(task));
+                .Add(mapper.Map<TaskProgress>(task));
 
                 context.SaveChanges();
             }

@@ -1,4 +1,6 @@
-﻿@model BusinessLogic.Models.TaskProgressDto
+﻿@using BusinessLogic.Enums
+@using ServiceOfElectronicDevices.Helpers
+@model BusinessLogic.Models.TaskProgressDto
 
 
 <h2>Aktualizuj</h2>
@@ -41,12 +43,13 @@
 
         <h4>Dodaj nowe zadanie:</h4>
         <div class="form-group">
-            @Html.Label("Stan: ", new { @class = "col-md-1 control-label" })
+            @Html.Label("Stan: ", new {@class = "col-md-1 control-label"})
             <div class="col-md-11">
-                @Html.TextBoxFor(m => m.State, new { @Value = "" })
-                @Html.ValidationMessageFor(m => m.State, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.State, Enum.GetValues(typeof (OrderStates)).OfType<OrderStates>().ToList().Select(e => new SelectListItem {Text = e.GetAttribute(), Value = e.ToString()}))
+                @Html.ValidationMessageFor(m => m.State, "", new {@class = "text-danger"})
             </div>
         </div>
+        <br/>
         <div class="form-group">
             @Html.Label("Opis: ", new { @class = "col-md-1 control-label" })
             <div class="col-md-11">

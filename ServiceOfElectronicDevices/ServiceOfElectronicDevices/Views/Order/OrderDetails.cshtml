@@ -1,4 +1,6 @@
-﻿@model BusinessLogic.Models.OrderDetailsViewModel
+﻿@using BusinessLogic.Enums
+@using ServiceOfElectronicDevices.Helpers
+@model BusinessLogic.Models.OrderDetailsViewModel
 
 @{
     ViewBag.Title = "OrderDetails";
@@ -60,7 +62,7 @@
                     @foreach (var task in Model.Tasks)
             {
                         <tr>
-                            <td>@task.State</td>
+                            <td>@task.State.GetAttribute()</td>
                             <td>@task.Description</td>
                             <td>@task.Price</td>
                             <td>@task.DateFrom</td>
@@ -69,7 +71,7 @@
                     }
                 </tbody>
             </table>
-            @if (User.IsInRole("Employee"))
+            @if (User.IsInRole("Employee") && Model.Tasks.Last().State != OrderStates.Done && Model.Tasks.Last().State != OrderStates.Deleted)
             {
                 @Html.ActionLink("Aktualizuj", "NewTask", "Order", new { id = @Model.Order.Id }, null)
             }

@@ -16,7 +16,7 @@ namespace DataAccess.Models
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
-        public string State { get; set; }
+        public int State { get; set; }
         public string Description { get; set; }
         public System.DateTime DateFrom { get; set; }
         public Nullable<System.DateTime> DateTo { get; set; }
