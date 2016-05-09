@@ -63,10 +63,19 @@
     <Compile Include="Models\AspNetUsers.cs">
       <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Devices.cs">
       <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Orders.cs">
+      <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Parts.cs">
+      <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PartTypes.cs">
       <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ServiceOfElectronicDevicesEntities.Context.cs">
@@ -85,6 +94,9 @@
       <DependentUpon>ServiceOfElectronicDevicesEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskProgress.cs">
+      <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Task_Part.cs">
       <DependentUpon>ServiceOfElectronicDevicesEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

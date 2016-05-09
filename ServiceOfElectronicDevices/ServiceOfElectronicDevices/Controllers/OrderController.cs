@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using BusinessLogic.Models;
 using BusinessLogic.Services;
@@ -11,13 +12,15 @@ namespace ServiceOfElectronicDevices.Controllers
     public class OrderController : Controller
     {
         private readonly OrderService orderService;
+        private readonly ComponentsService componentsService;
 
-        public OrderController(OrderService orderService)
+        public OrderController(OrderService orderService, ComponentsService componentsService)
         {
             this.orderService = orderService;
+            this.componentsService = componentsService;
         }
 
-        public OrderController() : this( new OrderService())
+        public OrderController() : this( new OrderService(), new ComponentsService())
         {
         }
 
@@ -52,6 +55,7 @@ namespace ServiceOfElectronicDevices.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Employee")]
+        [ValidateAntiForgeryToken]
         public ActionResult AddOrder(AddOrderViewModel model)
         {
             orderService.AddOrder(model.UserId, model.DeviceId, model.Description);
@@ -67,6 +71,7 @@ namespace ServiceOfElectronicDevices.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Employee")]
+        [ValidateAntiForgeryToken]
         public ActionResult AddDevice(DevicesDto deviceDto)
         {
             if (!ModelState.IsValid)
@@ -96,6 +101,7 @@ namespace ServiceOfElectronicDevices.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Employee")]
+        [ValidateAntiForgeryToken]
         public ActionResult NewTask(TaskProgressDto task)
         {
             if (!ModelState.IsValid)
@@ -104,6 +110,42 @@ namespace ServiceOfElectronicDevices.Controllers
             }
             orderService.AddTask(task);
             return RedirectToAction("OrderDetails", new {id = task.OrderId});
+        }
+
+        public ActionResult CommponentsList(TaskProgressDto model)
+        {
+            var model2 = new AddTaskViewModel
+            {
+                Id = model.Id,
+                OrderId= model.OrderId,
+                State = model.State,
+                Description = model.Description,
+                DateFrom = model.DateFrom,
+                Price = model.Price,
+                ComponentsTypes =
+                    new List<SelectListItem>(
+                        componentsService.GetComponentsTypes()
+                            .Select(c => new SelectListItem {Text = c.PartName, Value = c.Id.ToString()})),
+            };
+            return View("AddCommponents",model2);
+        }
+
+        [HttpGet]
+        public ActionResult AddCommponents(AddTaskViewModel model)
+        {
+            model.ComponentsTypes = new List<SelectListItem>(componentsService.GetComponentsTypes()
+                .Select(c => new SelectListItem {Text = c.PartName, Value = c.Id.ToString()}));
+            model.Components = componentsService.GetComponents(model.ComponentType);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Employee")]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCommponentsList(AddTaskViewModel model)
+        {
+            orderService.AddTaskWithComponentsList((TaskProgressDto)model, model.Posted.ComponentsIds);
+            return RedirectToAction("OrderDetails", new {id = model.OrderId});
         }
     }
 }

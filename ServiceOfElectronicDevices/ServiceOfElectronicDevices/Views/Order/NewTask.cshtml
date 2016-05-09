@@ -39,7 +39,7 @@
 
 
     <div>
-        <hr />
+        <hr/>
 
         <h4>Dodaj nowe zadanie:</h4>
         <div class="form-group">
@@ -51,15 +51,21 @@
         </div>
         <br/>
         <div class="form-group">
-            @Html.Label("Opis: ", new { @class = "col-md-1 control-label" })
+            @Html.Label("Opis: ", new {@class = "col-md-1 control-label"})
             <div class="col-md-11">
-                @Html.TextBoxFor(m => m.Description, new { @Value = "" })
+                @Html.TextBoxFor(m => m.Description, new {@Value = ""})
             </div>
         </div>
     </div>
+
+    <div>
+        
+    </div>
+
     <div class="form-group">
         <div class="col-md-offset-1 col-md-10">
-            <input type="submit" class="btn btn-default" value="Dodaj" />
+            <input type="submit" class="btn btn-default" value="Dodaj"/>
+            @Html.ActionLink("Dodaj listę podzespołów", "CommponentsList", "Order", Model, null)
         </div>
     </div>
 }

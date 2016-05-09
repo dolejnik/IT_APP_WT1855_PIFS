@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using BusinessLogic.Models;
 using BusinessLogic.Services;
 using Microsoft.AspNet.Identity.Owin;
 using ServiceOfElectronicDevices.Models;
@@ -14,13 +15,15 @@ namespace ServiceOfElectronicDevices.Controllers
     {
         private readonly OrderService orderService;
         private readonly UserRolesService userRolesService;
+        private readonly ComponentsService componentsService;
         private ApplicationUserManager _userManager;
 
 
-        public UserRolesController(OrderService orderService, UserRolesService userRolesService)
+        public UserRolesController(OrderService orderService, UserRolesService userRolesService, ComponentsService componentsService)
         {
             this.orderService = orderService;
             this.userRolesService = userRolesService;
+            this.componentsService = componentsService;
         }
 
         public ApplicationUserManager UserManager
@@ -36,7 +39,7 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
 
-        public UserRolesController() : this(new OrderService(), new UserRolesService())
+        public UserRolesController() : this(new OrderService(), new UserRolesService(), new ComponentsService())
         {
         }
 
@@ -45,7 +48,8 @@ namespace ServiceOfElectronicDevices.Controllers
             var model = new UserRolesViewModel
             {
                 Users = orderService.GetClientsList().Select(user => new SelectListItem { Text = user.UserName, Value = user.Id }),
-                Roles = userRolesService.GetRoleList().Select(role => new SelectListItem {Text = role.Name, Value = role.Name})
+                Roles = userRolesService.GetRoleList().Select(role => new SelectListItem {Text = role.Name, Value = role.Name}),
+                ComponentsTypes = componentsService.GetComponentsTypes().Select(type => new SelectListItem { Text = type.PartName, Value = type.Id.ToString()})
             };
             return View(model);
         }
@@ -64,6 +68,18 @@ namespace ServiceOfElectronicDevices.Controllers
         {
             await UserManager.RemoveFromRoleAsync(model.UserId, model.Role);
             return RedirectToAction("ManageUserRoles", "UserRoles");
+        }
+
+        public ActionResult AddComponentType(string componentType)
+        {
+            componentsService.AddComponentType(componentType);
+            return RedirectToAction("ManageUserRoles");
+        }
+
+        public ActionResult AddComponent(PartDto partDto)
+        {
+            componentsService.AddComponent(partDto);
+            return RedirectToAction("ManageUserRoles");
         }
     }
 }

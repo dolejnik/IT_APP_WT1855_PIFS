@@ -12,12 +12,19 @@
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.Devices" Width="1.5" PointX="7.75" PointY="3.25" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.Devices" Width="1.5" PointX="5.5" PointY="4.625" />
         <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.Orders" Width="1.5" PointX="5.5" PointY="1.375" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__UserId__4D94879B" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__Orders__DeviceId__4E88ABD4" />
         <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.TaskProgress" Width="1.5" PointX="7.75" PointY="0.5" />
         <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__44FF419A" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.Parts" Width="1.5" PointX="10.125" PointY="3.75" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.PartTypes" Width="1.5" PointX="7.75" PointY="4.125" />
+        <EntityTypeShape EntityType="ServiceOfElectronicDevicesDataBaseModel.Task_Part" Width="1.5" PointX="10.375" PointY="0.875" />
+        <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__Parts__PartId__60A75C0F" />
+        <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__Task_Part__PartI__628FA481" />
+        <AssociationConnector Association="ServiceOfElectronicDevicesDataBaseModel.FK__Task_Part__TaskI__619B8048" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

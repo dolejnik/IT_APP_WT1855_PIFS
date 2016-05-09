@@ -12,24 +12,18 @@ namespace DataAccess.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TaskProgress
+    public partial class PartTypes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TaskProgress()
+        public PartTypes()
         {
-            this.Task_Part = new HashSet<Task_Part>();
+            this.Parts = new HashSet<Parts>();
         }
     
         public int Id { get; set; }
-        public int OrderId { get; set; }
-        public int State { get; set; }
-        public string Description { get; set; }
-        public System.DateTime DateFrom { get; set; }
-        public Nullable<System.DateTime> DateTo { get; set; }
-        public Nullable<double> Price { get; set; }
+        public string PartName { get; set; }
     
-        public virtual Orders Orders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task_Part> Task_Part { get; set; }
+        public virtual ICollection<Parts> Parts { get; set; }
     }
 }

@@ -59,9 +59,13 @@
     <Compile Include="Models\DevicesDto.cs" />
     <Compile Include="Models\OrdersDto.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
+    <Compile Include="Models\PartDto.cs" />
+    <Compile Include="Models\PartTypeDto.cs" />
     <Compile Include="Models\TaskProgressDto.cs" />
+    <Compile Include="Models\TaskProgressViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\OrderDetailsViewModel.cs" />
+    <Compile Include="Services\ComponentsService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\TokenService.cs" />
     <Compile Include="Services\UserRolesService.cs" />

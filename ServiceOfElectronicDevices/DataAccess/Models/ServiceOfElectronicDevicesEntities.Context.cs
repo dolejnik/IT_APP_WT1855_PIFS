@@ -32,5 +32,9 @@ namespace DataAccess.Models
         public virtual DbSet<Devices> Devices { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<TaskProgress> TaskProgress { get; set; }
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
+        public virtual DbSet<Parts> Parts { get; set; }
+        public virtual DbSet<PartTypes> PartTypes { get; set; }
+        public virtual DbSet<Task_Part> Task_Part { get; set; }
     }
 }

@@ -13,5 +13,7 @@ namespace ServiceOfElectronicDevices.Models
 
         public IEnumerable<System.Web.Mvc.SelectListItem> Users { get; set; }
         public IEnumerable<SelectListItem> Roles { get; set; }
+
+        public IEnumerable<SelectListItem> ComponentsTypes { get; set; } 
     }
 }

@@ -5,6 +5,12 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ServiceOfElectronicDevicesDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -77,6 +83,31 @@
           <Property Name="Price" Type="float" />
           <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Parts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PartId" Type="int" Nullable="false" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PartTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PartName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Task_Part">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="PartId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TaskProgress">
           <Key>
             <PropertyRef Name="Id" />
@@ -114,6 +145,48 @@
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Parts__PartId__6FE99F9F">
+          <End Role="PartTypes" Type="Self.PartTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Parts" Type="Self.Parts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parts">
+              <PropertyRef Name="PartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_Part__PartI__628FA481">
+          <End Role="Parts" Type="Self.Parts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Task_Part" Type="Self.Task_Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task_Part">
+              <PropertyRef Name="PartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_Part__TaskI__619B8048">
+          <End Role="TaskProgress" Type="Self.TaskProgress" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Task_Part" Type="Self.Task_Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskProgress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task_Part">
+              <PropertyRef Name="TaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -188,6 +261,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ServiceOfElectronicDevicesDataBaseModelStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -195,6 +269,9 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Devices" EntityType="Self.Devices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parts" EntityType="Self.Parts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PartTypes" EntityType="Self.PartTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task_Part" EntityType="Self.Task_Part" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskProgress" EntityType="Self.TaskProgress" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Orders__DeviceId__46E78A0C" Association="Self.FK__Orders__DeviceId__46E78A0C">
             <End Role="Devices" EntitySet="Devices" />
@@ -203,6 +280,18 @@
           <AssociationSet Name="FK__Orders__UserId__45F365D3" Association="Self.FK__Orders__UserId__45F365D3">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Parts__PartId__6FE99F9F" Association="Self.FK__Parts__PartId__6FE99F9F">
+            <End Role="PartTypes" EntitySet="PartTypes" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_Part__PartI__628FA481" Association="Self.FK__Task_Part__PartI__628FA481">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="Task_Part" EntitySet="Task_Part" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_Part__TaskI__619B8048" Association="Self.FK__Task_Part__TaskI__619B8048">
+            <End Role="TaskProgress" EntitySet="TaskProgress" />
+            <End Role="Task_Part" EntitySet="Task_Part" />
           </AssociationSet>
           <AssociationSet Name="FK__TaskProgr__Order__44FF419A" Association="Self.FK__TaskProgr__Order__44FF419A">
             <End Role="Orders" EntitySet="Orders" />
@@ -346,6 +435,22 @@
             <End Role="Orders" EntitySet="Orders" />
             <End Role="TaskProgress" EntitySet="TaskProgress" />
           </AssociationSet>
+          <EntitySet Name="C__RefactorLog" EntityType="ServiceOfElectronicDevicesDataBaseModel.C__RefactorLog" />
+          <EntitySet Name="Parts" EntityType="ServiceOfElectronicDevicesDataBaseModel.Parts" />
+          <EntitySet Name="PartTypes" EntityType="ServiceOfElectronicDevicesDataBaseModel.PartTypes" />
+          <EntitySet Name="Task_Part" EntityType="ServiceOfElectronicDevicesDataBaseModel.Task_Part" />
+          <AssociationSet Name="FK__Parts__PartId__60A75C0F" Association="ServiceOfElectronicDevicesDataBaseModel.FK__Parts__PartId__60A75C0F">
+            <End Role="PartTypes" EntitySet="PartTypes" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_Part__PartI__628FA481" Association="ServiceOfElectronicDevicesDataBaseModel.FK__Task_Part__PartI__628FA481">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="Task_Part" EntitySet="Task_Part" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_Part__TaskI__619B8048" Association="ServiceOfElectronicDevicesDataBaseModel.FK__Task_Part__TaskI__619B8048">
+            <End Role="TaskProgress" EntitySet="TaskProgress" />
+            <End Role="Task_Part" EntitySet="Task_Part" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Devices">
           <Key>
@@ -405,6 +510,7 @@
           <Property Name="DateTo" Type="DateTime" Precision="3" />
           <Property Name="Price" Type="Double" />
           <NavigationProperty Name="Orders" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__TaskProgr__Order__44FF419A" FromRole="TaskProgress" ToRole="Orders" />
+          <NavigationProperty Name="Task_Part" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Task_Part__TaskI__619B8048" FromRole="TaskProgress" ToRole="Task_Part" />
         </EntityType>
         <Association Name="FK__TaskProgr__Order__44FF419A">
           <End Type="ServiceOfElectronicDevicesDataBaseModel.Orders" Role="Orders" Multiplicity="1">
@@ -417,6 +523,84 @@
             </Principal>
             <Dependent Role="TaskProgress">
               <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PartId" Type="Int32" Nullable="false" />
+          <Property Name="Brand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="PartTypes" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Parts__PartId__60A75C0F" FromRole="Parts" ToRole="PartTypes" />
+          <NavigationProperty Name="Task_Part" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Task_Part__PartI__628FA481" FromRole="Parts" ToRole="Task_Part" />
+        </EntityType>
+        <EntityType Name="PartTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PartName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Parts" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Parts__PartId__60A75C0F" FromRole="PartTypes" ToRole="Parts" />
+        </EntityType>
+        <EntityType Name="Task_Part">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="PartId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Parts" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Task_Part__PartI__628FA481" FromRole="Task_Part" ToRole="Parts" />
+          <NavigationProperty Name="TaskProgress" Relationship="ServiceOfElectronicDevicesDataBaseModel.FK__Task_Part__TaskI__619B8048" FromRole="Task_Part" ToRole="TaskProgress" />
+        </EntityType>
+        <Association Name="FK__Parts__PartId__60A75C0F">
+          <End Type="ServiceOfElectronicDevicesDataBaseModel.PartTypes" Role="PartTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ServiceOfElectronicDevicesDataBaseModel.Parts" Role="Parts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parts">
+              <PropertyRef Name="PartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_Part__PartI__628FA481">
+          <End Type="ServiceOfElectronicDevicesDataBaseModel.Parts" Role="Parts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ServiceOfElectronicDevicesDataBaseModel.Task_Part" Role="Task_Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task_Part">
+              <PropertyRef Name="PartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_Part__TaskI__619B8048">
+          <End Type="ServiceOfElectronicDevicesDataBaseModel.TaskProgress" Role="TaskProgress" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ServiceOfElectronicDevicesDataBaseModel.Task_Part" Role="Task_Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskProgress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task_Part">
+              <PropertyRef Name="TaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -511,6 +695,41 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="ServiceOfElectronicDevicesDataBaseModel.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parts">
+            <EntityTypeMapping TypeName="ServiceOfElectronicDevicesDataBaseModel.Parts">
+              <MappingFragment StoreEntitySet="Parts">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="PartId" ColumnName="PartId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartTypes">
+            <EntityTypeMapping TypeName="ServiceOfElectronicDevicesDataBaseModel.PartTypes">
+              <MappingFragment StoreEntitySet="PartTypes">
+                <ScalarProperty Name="PartName" ColumnName="PartName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Task_Part">
+            <EntityTypeMapping TypeName="ServiceOfElectronicDevicesDataBaseModel.Task_Part">
+              <MappingFragment StoreEntitySet="Task_Part">
+                <ScalarProperty Name="PartId" ColumnName="PartId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

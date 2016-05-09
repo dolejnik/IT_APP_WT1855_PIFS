@@ -138,10 +138,48 @@ namespace BusinessLogic.Services
                         DeviceBrand = order.Devices.Brand
                     },
                     Description = order.Description,
-                    Tasks = mapper.Map<IEnumerable<TaskProgressDto>>(order.TaskProgress.ToList())
+                    Tasks = order.TaskProgress
+                            .Select(t => new TaskProgressViewModel
+                            {
+                                Task = new TaskProgressDto
+                                {
+                                    DateFrom = t.DateFrom,
+                                    DateTo = t.DateTo,
+                                    Description = t.Description,
+                                    Id = t.Id,
+                                    OrderId = t.OrderId,
+                                    Price = t.Price ?? 0.0,
+                                    State = (OrderStates)t.State
+                                },
+                                ComponentsList = t.Task_Part.Select(d =>  new PartDto
+                                {
+                                    Brand = d.Parts.Brand,
+                                    Id = d.Parts.Id,
+                                    Model = d.Parts.Model,
+                                    PartId = d.Parts.PartId,
+                                    Price = d.Parts.Price
+                                }).ToList()
+                            }).ToList()// mapper.Map<IEnumerable<TaskProgressDto>>(order.TaskProgress.ToList())
                 };
 
                 return model;
+            }
+        }
+
+        public void AddTaskWithComponentsList(TaskProgressDto task, int[] componentsIds)
+        {
+            task.State = OrderStates.WaitingForClient;
+            AddTask(task);
+            var taskId = GetLastTask(task.OrderId).Id;
+
+            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
+            {
+                foreach (var componentId in componentsIds)
+                {
+                    context.TaskProgress.Find(taskId).Task_Part.Add(new Task_Part { PartId = componentId});
+                }
+
+                context.SaveChanges();
             }
         }
 

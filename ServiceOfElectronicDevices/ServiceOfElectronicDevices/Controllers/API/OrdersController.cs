@@ -29,5 +29,15 @@ namespace ServiceOfElectronicDevices.Controllers.API
             var orders = orderService.GetUserOrders(user.Id);
             return Json(orders);
         }
+
+        public IHttpActionResult Get(string token, int orderId)
+        {
+            var user = tokenService.CheckToken(token);
+            if (user == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Unauthorized));
+
+            var order = orderService.GetOrderDetails(orderId);
+            return Json(order);
+        }
     }
 }

@@ -60,23 +60,40 @@
                 </thead>
                 <tbody>
                     @foreach (var task in Model.Tasks)
-            {
+                    {
                         <tr>
-                            <td>@task.State.GetAttribute()</td>
-                            <td>@task.Description</td>
-                            <td>@task.Price</td>
-                            <td>@task.DateFrom</td>
-                            <td>@task.DateTo</td>
+                            <td>@task.Task.State.GetAttribute()</td>
+                            <td>@task.Task.Description</td>
+                            <td>@task.Task.Price</td>
+                            <td>@task.Task.DateFrom</td>
+                            <td>@task.Task.DateTo</td>
                         </tr>
+
+                        if (task.ComponentsList.Any())
+                        {
+                            <tr><td colspan="2"></td><td colspan="3">Wybierz część z poniższych:</td></tr>
+                                foreach (var device in task.ComponentsList)
+                                {
+                                    <tr>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td>@device.Brand</td>
+                                        <td>@device.Model</td>
+                                        <td>@device.Price</td>
+                                    </tr>
+                                }
+
+                        }
                     }
                 </tbody>
             </table>
-            @if (User.IsInRole("Employee") && Model.Tasks.Last().State != OrderStates.Done && Model.Tasks.Last().State != OrderStates.Deleted)
+            @if (User.IsInRole("Employee") && Model.Tasks.Last().Task.State != OrderStates.Done && Model.Tasks.Last().Task.State != OrderStates.Deleted)
             {
                 @Html.ActionLink("Aktualizuj", "NewTask", "Order", new { id = @Model.Order.Id }, null)
             }
-                </div>
-            </div>
-
-
         </div>
+    </div>
+
+
+</div>

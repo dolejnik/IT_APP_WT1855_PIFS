@@ -1,0 +1,44 @@
+﻿@using MvcCheckBoxList.Model
+@model ServiceOfElectronicDevices.Models.AddTaskViewModel
+
+@{
+    ViewBag.Title = "Dodaj listę podzespołów";
+}
+
+<h2>Dodaj listę podzespołów</h2>
+
+@using (Html.BeginForm("AddCommponents", "Order", FormMethod.Get))
+{
+    @Html.HiddenFor(m => m.ComponentsTypes)
+    @Html.HiddenFor(m => m.Description)
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.OrderId)
+    @Html.HiddenFor(m => m.Price)
+    @Html.HiddenFor(m => m.State)
+    @Html.HiddenFor(m => m.DateFrom)
+    @Html.DropDownListFor(m => m.ComponentType, Model.ComponentsTypes)
+    <input type="submit" class="btn btn-default" value="Pokaż" />
+}
+
+@if (Model.Components != null)
+{
+    using (Html.BeginForm("AddCommponentsList", "Order", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ComponentType)
+        @Html.HiddenFor(m => m.ComponentsTypes)
+        @Html.HiddenFor(m => m.Description)
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.OrderId)
+        @Html.HiddenFor(m => m.Price)
+        @Html.HiddenFor(m => m.State)
+        @Html.HiddenFor(m => m.DateFrom)
+         <div class="center">
+             @Html.CheckBoxListFor(m => m.Posted.ComponentsIds, m => m.Components, s => s.Id, s => $"{s.Brand} {s.Model}", m => m.Selected, Position.Horizontal)
+         </div>
+
+        <input type="submit" class="btn btn-default" value="Dodaj" />
+
+    }
+}
+

@@ -69,8 +69,14 @@
     <Build Include="dbo\Tables\Orders.sql" />
     <Build Include="dbo\Tables\Devices.sql" />
     <Build Include="dbo\Tables\TaskProgress.sql" />
+    <Build Include="dbo\Tables\Parts.sql" />
+    <Build Include="dbo\Tables\Task_Part.sql" />
+    <Build Include="dbo\Tables\PartTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
 </Project>
