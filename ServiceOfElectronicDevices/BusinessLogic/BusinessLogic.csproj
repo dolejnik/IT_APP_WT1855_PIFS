@@ -56,6 +56,7 @@
     <Compile Include="Enums\OrderStates.cs" />
     <Compile Include="Models\AspNetRolesDto.cs" />
     <Compile Include="Models\AspNetUsersDto.cs" />
+    <Compile Include="Models\ChooseTaskModel.cs" />
     <Compile Include="Models\DevicesDto.cs" />
     <Compile Include="Models\OrdersDto.cs" />
     <Compile Include="Models\OrderViewModel.cs" />

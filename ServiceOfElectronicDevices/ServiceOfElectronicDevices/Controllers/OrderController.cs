@@ -147,5 +147,13 @@ namespace ServiceOfElectronicDevices.Controllers
             orderService.AddTaskWithComponentsList((TaskProgressDto)model, model.Posted.ComponentsIds);
             return RedirectToAction("OrderDetails", new {id = model.OrderId});
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChooseComponent(int orderId, int taskId, int componentId)
+        {
+            orderService.ChooseComponent(new ChooseTaskModel {OrderId = orderId, TaskId = taskId, ComponentId = componentId});
+            return RedirectToAction("OrderDetails", new {id = orderId});
+        }
     }
 }

@@ -71,18 +71,44 @@
 
                         if (task.ComponentsList.Any())
                         {
-                            <tr><td colspan="2"></td><td colspan="3">Wybierz część z poniższych:</td></tr>
-                                foreach (var device in task.ComponentsList)
-                                {
-                                    <tr>
+                            if (task.Task.State == OrderStates.WaitingForClient)
+                            {
+                                <tr><td colspan="2"></td><td colspan="3">Wybierz część z poniższych:</td></tr>
+                            }
+                            <tr>
 
+                                <td></td>
+                                <td></td>
+                                <td>Marka:</td>
+                                <td>Model:</td>
+                                <td>Cena:</td>
+                            </tr>
+
+                            foreach (var device in task.ComponentsList)
+                            {
+                                <tr>
+                                    @using (Html.BeginForm("ChooseComponent", "Order", new {orderId = task.Task.OrderId , taskId = task.Task.Id , componentId = device.Id },FormMethod.Post, null ))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @*@Html.Hidden("orderId", task.Task.OrderId)
+                                        @Html.Hidden("TaskId", task.Task.Id)
+                                        @Html.Hidden("compontntId", device.Id)*@
                                         <td></td>
-                                        <td></td>
+                                        if (task.Task.State == OrderStates.WaitingForClient && task.Task.DateTo == null)
+                                        {
+                                            <td><input type="submit" class="btn btn-default" value="Wybierz" /></td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
                                         <td>@device.Brand</td>
                                         <td>@device.Model</td>
                                         <td>@device.Price</td>
-                                    </tr>
-                                }
+                                    }
+
+                                </tr>
+                            }
 
                         }
                     }

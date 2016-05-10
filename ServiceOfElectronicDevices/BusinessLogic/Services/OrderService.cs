@@ -176,7 +176,10 @@ namespace BusinessLogic.Services
             {
                 foreach (var componentId in componentsIds)
                 {
-                    context.TaskProgress.Find(taskId).Task_Part.Add(new Task_Part { PartId = componentId});
+                    context.TaskProgress
+                           .Find(taskId)
+                           .Task_Part
+                           .Add(new Task_Part { PartId = componentId});
                 }
 
                 context.SaveChanges();
@@ -218,6 +221,38 @@ namespace BusinessLogic.Services
 
                 context.TaskProgress
                 .Add(mapper.Map<TaskProgress>(task));
+
+                context.SaveChanges();
+            }
+        }
+
+        public void ChooseComponent(ChooseTaskModel model)
+        {
+            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
+            {
+                 var order = context.Orders
+                                    .SingleOrDefault(o => o.Id == model.OrderId);
+
+                if(order.TaskProgress.SingleOrDefault(t => t.Id == model.TaskId).DateTo != null)
+                    return;
+
+                 order.TaskProgress
+                      .SingleOrDefault(t => t.Id == model.TaskId)
+                      .DateTo = DateTime.Now;
+
+                var task = new TaskProgress
+                {
+                    DateFrom = DateTime.Now,
+                    State = (int) OrderStates.WaitingForParts
+                };
+                order.TaskProgress
+                     .Add(task);
+
+                context.Task_Part.Add(new Task_Part
+                {
+                    TaskId  = task.Id,
+                    PartId = model.ComponentId
+                });
 
                 context.SaveChanges();
             }
