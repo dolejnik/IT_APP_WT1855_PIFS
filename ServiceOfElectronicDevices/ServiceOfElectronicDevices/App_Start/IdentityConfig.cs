@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using BusinessLogic.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -18,6 +19,13 @@ namespace Web
 {
     public class EmailService : IIdentityMessageService
     {
+        private readonly SendEmailService emailService;
+
+        public EmailService()
+        {
+            this.emailService = new SendEmailService();
+        }
+
         public async Task SendAsync(IdentityMessage message)
         {
             try
@@ -30,20 +38,21 @@ namespace Web
                 msg.Subject = message.Subject;
                 msg.Body = message.Body;
                 msg.IsBodyHtml = true;
+                await emailService.SendAsync(msg);
 
-                using (var smtp = new SmtpClient())
-                {
-                    var credential = new NetworkCredential
-                    {
-                        UserName = "serviceofed@gmail.com",
-                        Password = "!qaz2wsx"
-                    };
-                    smtp.Credentials = credential;
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Port = 587;
-                    smtp.EnableSsl = true;
-                    await smtp.SendMailAsync(msg);
-                }
+                //using (var smtp = new SmtpClient())
+                //{
+                //    var credential = new NetworkCredential
+                //    {
+                //        UserName = "serviceofed@gmail.com",
+                //        Password = "!qaz2wsx"
+                //    };
+                //    smtp.Credentials = credential;
+                //    smtp.Host = "smtp.gmail.com";
+                //    smtp.Port = 587;
+                //    smtp.EnableSsl = true;
+                //    await smtp.SendMailAsync(msg);
+                //}
 
             }
             catch (Exception e)

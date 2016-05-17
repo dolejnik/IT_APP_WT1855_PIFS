@@ -27,7 +27,7 @@
     <div class="row">
         @Html.Label("Koszt: ", new { @class = "col-md-1 control-label" })
         <div class="col-md-11">
-            @Html.TextBoxFor(m => m.Price)
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
         </div>
     </div>
     <div class="row">
@@ -45,7 +45,7 @@
         <div class="form-group">
             @Html.Label("Stan: ", new {@class = "col-md-1 control-label"})
             <div class="col-md-11">
-                @Html.DropDownListFor(m => m.State, Enum.GetValues(typeof (OrderStates)).OfType<OrderStates>().ToList().Select(e => new SelectListItem {Text = e.GetAttribute(), Value = e.ToString()}))
+                @Html.DropDownListFor(m => m.State, Enum.GetValues(typeof (OrderStates)).OfType<OrderStates>().ToList().Select(e => new SelectListItem {Text = e.GetAttribute(), Value = e.ToString()}), new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.State, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -53,7 +53,7 @@
         <div class="form-group">
             @Html.Label("Opis: ", new {@class = "col-md-1 control-label"})
             <div class="col-md-11">
-                @Html.TextBoxFor(m => m.Description, new {@Value = ""})
+                @Html.TextBoxFor(m => m.Description, new {@Value = "", @class="form-control"})
             </div>
         </div>
     </div>

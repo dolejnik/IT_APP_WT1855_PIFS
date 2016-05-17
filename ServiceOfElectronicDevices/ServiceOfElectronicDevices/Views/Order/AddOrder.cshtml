@@ -13,7 +13,8 @@
     <div class="form-group">
         @Html.Label("Klienci: ", new { @class = "col-md-1 control-label" })
         <div class="col-md-11">
-            @Html.DropDownListFor(m => m.UserId, Model.Users, new { @class = "form-control" })
+            
+            @Html.DropDownListFor(m => m.UserId, Model.Users, new {@class = "form-control"})
             @Html.ActionLink("Dodaj klienta", "Register", "Account", null, new {@class = "btn btn-default"})
         </div>
     </div>

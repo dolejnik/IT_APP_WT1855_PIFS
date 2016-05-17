@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using BusinessLogic.Models;
 using BusinessLogic.Services;
@@ -102,14 +103,15 @@ namespace ServiceOfElectronicDevices.Controllers
         [HttpPost]
         [Authorize(Roles = "Employee")]
         [ValidateAntiForgeryToken]
-        public ActionResult NewTask(TaskProgressDto task)
+        public async Task<ActionResult> NewTask(TaskProgressDto task)
         {
             if (!ModelState.IsValid)
             {
                 return View(task);
             }
-            orderService.AddTask(task);
-            return RedirectToAction("OrderDetails", new {id = task.OrderId});
+
+            await orderService.AddTask(task);
+            return RedirectToAction("OrderDetails", new { id = task.OrderId });
         }
 
         public ActionResult CommponentsList(TaskProgressDto model)
@@ -142,9 +144,9 @@ namespace ServiceOfElectronicDevices.Controllers
         [HttpPost]
         [Authorize(Roles = "Employee")]
         [ValidateAntiForgeryToken]
-        public ActionResult AddCommponentsList(AddTaskViewModel model)
+        public async Task<RedirectToRouteResult> AddCommponentsList(AddTaskViewModel model)
         {
-            orderService.AddTaskWithComponentsList((TaskProgressDto)model, model.Posted.ComponentsIds);
+            await orderService.AddTaskWithComponentsList((TaskProgressDto)model, model.Posted.ComponentsIds);
             return RedirectToAction("OrderDetails", new {id = model.OrderId});
         }
 

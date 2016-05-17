@@ -5,11 +5,20 @@ using AutoMapper;
 using BusinessLogic.Enums;
 using BusinessLogic.Models;
 using DataAccess.Models;
+using ServiceOfElectronicDevices.Helpers;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
     public class OrderService
     {
+        private SendEmailService emailService;
+
+        public OrderService()
+        {
+            emailService = new SendEmailService();
+        }
+
         public void AddOrder(string userId, int deviceId, string description)
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
@@ -166,10 +175,10 @@ namespace BusinessLogic.Services
             }
         }
 
-        public void AddTaskWithComponentsList(TaskProgressDto task, int[] componentsIds)
+        public async Task AddTaskWithComponentsList(TaskProgressDto task, int[] componentsIds)
         {
             task.State = OrderStates.WaitingForClient;
-            AddTask(task);
+            await AddTask(task);
             var taskId = GetLastTask(task.OrderId).Id;
 
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
@@ -202,7 +211,7 @@ namespace BusinessLogic.Services
             }
         }
 
-        public void AddTask(TaskProgressDto task)
+        public async Task AddTask(TaskProgressDto task)
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
@@ -223,6 +232,7 @@ namespace BusinessLogic.Services
                 .Add(mapper.Map<TaskProgress>(task));
 
                 context.SaveChanges();
+                await emailService.SendAsync(context.Orders.Find(task.OrderId).AspNetUsers.Email, "Zmiana statusu zgłoszenia", $"Status zgłoszenia został zmieniony na {task.State.GetAttribute()}.");
             }
         }
 
