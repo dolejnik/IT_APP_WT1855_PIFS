@@ -81,13 +81,14 @@ namespace BusinessLogic.Services
             }
         }
 
-        public OrderViewModel GetOrderList()
+        public OrderViewModel GetOrderList(OrderStates state, string clientEmail = null)
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
                 var mapper = new MapperConfiguration(m => m.CreateMap<TaskProgress, TaskProgressDto>()).CreateMapper();
                 var orderList = context
                     .Orders
+                    .Where(o => string.IsNullOrEmpty(clientEmail) || o.AspNetUsers.Email == clientEmail)
                     .ToList()
                     .Select(order => new OrderViewModel.Order
                     {
@@ -97,6 +98,7 @@ namespace BusinessLogic.Services
                         DeviceBrand = order.Devices.Brand,
                         CurrentState = mapper.Map<TaskProgressDto>(order.TaskProgress.OrderBy(t => t.DateFrom).Last())
                     })
+                    .Where(o => (int)state == -1 || o.CurrentState.State == state)
                     .ToList();
                 return new OrderViewModel { Orders = orderList };
             }

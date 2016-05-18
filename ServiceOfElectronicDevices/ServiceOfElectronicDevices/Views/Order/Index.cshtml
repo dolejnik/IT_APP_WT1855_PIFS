@@ -6,7 +6,7 @@
 }
 
 <hr />
-<div class="panel panel-success" style="-ms-opacity:0.9; opacity:0.9; color:black">
+<div class="panel panel-success" style="-ms-opacity: 0.9; opacity: 0.9; color: black">
     <div class="panel-heading">
         <h3 class="panel-title">Spis zamówień</h3>
     </div>
@@ -15,34 +15,83 @@
 
         @if (User.IsInRole("Employee"))
         {
-            @Html.ActionLink("Dodaj zamówienie", "AddOrder", "Order", new { @class = "btn btn-default" })
+            @Html.ActionLink("Dodaj zamówienie", "AddOrder", "Order", new {@class = "col-lg-2 btn btn-default"})
+
+            using (Html.BeginForm("AdminIndex", "Order", FormMethod.Get))
+            {
+                <div class="ui-widget col-lg-9 col-lg-offset-1">
+                    @Html.Label("Email:")
+                    @Html.TextBox("clientEmail")
+                    @Html.Label("Stan:")
+                    @Html.DropDownList("state", Enum.GetValues(typeof(OrderStates)).OfType<OrderStates>().ToList().Select(e => new SelectListItem { Text = e.GetAttribute(), Value = ((int)e).ToString() }),"Wszystkie", new { @class = "" })
+
+                    <input type="submit" value="Szukaj"/>
+
+                </div>
+            }
         }
 
         <table class="table">
             <thead>
-                <tr>
-                    <th>Klient</th>
-                    <th>Urządzenie</th>
-                    <th>Stan</th>
-                    <th>Data rozpoczęcia</th>
-                    <th>Opis</th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th>Klient</th>
+                <th>Urządzenie</th>
+                <th>Stan</th>
+                <th>Data rozpoczęcia</th>
+                <th>Opis</th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var order in Model.Orders)
+            @foreach (var order in Model.Orders)
             {
-                    <tr @if (@order.CurrentState.State == OrderStates.Deleted) { <text> class="danger" </text>     } else if (@order.CurrentState.State == OrderStates.Ready) { <text> class="success" </text>     } else if (@order.CurrentState.State == OrderStates.WaitingForClient) { <text> class="warning" </text>     } else if (@order.CurrentState.State == OrderStates.Accepted) { <text> class="active" </text>     } else { <text> class="info" </text>     }>
-                        <td>@order.ClientName</td>
-                        <td>@order.DeviceBrand @order.DeviceModel</td>
-                        <td>@order.CurrentState.State.GetAttribute()</td>
-                        <td>@order.CurrentState.DateFrom</td>
-                        <td>@order.CurrentState.Description</td>
-                        <td>@Html.ActionLink("Szczegóły", "OrderDetails", "Order", new { id = order.Id }, null)</td>
-                    </tr>
-                }
+                <tr @if (@order.CurrentState.State == OrderStates.Deleted)
+                    {
+                        <text> class="danger" </text>
+                    }
+                    else if (@order.CurrentState.State == OrderStates.Ready)
+                    {
+                        <text> class="success" </text>
+                    }
+                    else if (@order.CurrentState.State == OrderStates.WaitingForClient)
+                    {
+                        <text> class="warning" </text>
+                    }
+                    else if (@order.CurrentState.State == OrderStates.Accepted)
+                    {
+                        <text> class="active" </text>
+                    }
+                    else
+                    {
+                        <text> class="info" </text>
+                    }>
+                    <td>@order.ClientName</td>
+                    <td>@order.DeviceBrand @order.DeviceModel</td>
+                    <td>@order.CurrentState.State.GetAttribute()</td>
+                    <td>@order.CurrentState.DateFrom</td>
+                    <td>@order.CurrentState.Description</td>
+                    <td>@Html.ActionLink("Szczegóły", "OrderDetails", "Order", new {id = order.Id}, null)</td>
+                </tr>
+            }
             </tbody>
         </table>
-        <hr />
+        <hr/>
     </div>
 </div>
+
+@section Scripts{
+<script>
+
+  $(function() {
+    $( "#clientEmail" ).autocomplete({
+
+      source: '@Url.Action("GetClients", "UserRoles")'
+
+    });
+
+  });
+
+</script>
+
+
+}

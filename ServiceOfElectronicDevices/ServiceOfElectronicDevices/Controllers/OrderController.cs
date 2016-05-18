@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using BusinessLogic.Enums;
 using BusinessLogic.Models;
 using BusinessLogic.Services;
 using Microsoft.AspNet.Identity;
@@ -36,9 +37,9 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
         [Authorize(Roles = "Employee")]
-        public ActionResult AdminIndex()
+        public ActionResult AdminIndex(int state = -1, string clientEmail = null)
         {
-            var model = orderService.GetOrderList();
+            var model = orderService.GetOrderList((OrderStates)state, clientEmail);
             return View("Index", model);
         }
 

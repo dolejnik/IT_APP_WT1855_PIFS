@@ -81,5 +81,11 @@ namespace ServiceOfElectronicDevices.Controllers
             componentsService.AddComponent(partDto);
             return RedirectToAction("ManageUserRoles");
         }
+
+        public ActionResult GetClients(string term)
+        {
+            var res = orderService.GetClientsList().Where(c => c.Email.ToLower().Contains(term)).Select(c => c.Email).ToArray();
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
     }
 }
