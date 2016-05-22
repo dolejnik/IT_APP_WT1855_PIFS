@@ -4,6 +4,7 @@
 
 @{
     ViewBag.Title = "OrderDetails";
+    double testowa = 0;
 }
 
 <hr />
@@ -59,6 +60,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     @foreach (var task in Model.Tasks)
                     {
                         <tr>
@@ -68,7 +70,7 @@
                             <td>@task.Task.DateFrom</td>
                             <td>@task.Task.DateTo</td>
                         </tr>
-
+                        testowa += (testowa + task.Task.Price);
                         if (task.ComponentsList.Any())
                         {
                             if (task.Task.State == OrderStates.WaitingForClient)
@@ -84,12 +86,13 @@
                                 <td>Cena:</td>
                             </tr>
 
+
                             foreach (var device in task.ComponentsList)
                             {
                                 <tr>
                                     @using (Html.BeginForm("ChooseComponent", "Order", new {orderId = task.Task.OrderId , taskId = task.Task.Id , componentId = device.Id },FormMethod.Post, null ))
                                     {
-                                        @Html.AntiForgeryToken()
+                                    @Html.AntiForgeryToken()
                                         @*@Html.Hidden("orderId", task.Task.OrderId)
                                         @Html.Hidden("TaskId", task.Task.Id)
                                         @Html.Hidden("compontntId", device.Id)*@
@@ -105,15 +108,24 @@
                                         <td>@device.Brand</td>
                                         <td>@device.Model</td>
                                         <td>@device.Price</td>
+
                                     }
 
                                 </tr>
                             }
-
                         }
                     }
                 </tbody>
             </table>
+
+            <table>
+                <tr>
+                    <td>Calkowita cena to: </td>
+                    <td>@testowa</td>
+                </tr>
+
+            </table>
+
             @if (User.IsInRole("Employee") && Model.Tasks.Last().Task.State != OrderStates.Done && Model.Tasks.Last().Task.State != OrderStates.Deleted)
             {
                 @Html.ActionLink("Aktualizuj", "NewTask", "Order", new { id = @Model.Order.Id }, null)
