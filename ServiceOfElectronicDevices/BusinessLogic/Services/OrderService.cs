@@ -89,6 +89,7 @@ namespace BusinessLogic.Services
                 var orderList = context
                     .Orders
                     .Where(o => string.IsNullOrEmpty(clientEmail) || o.AspNetUsers.Email == clientEmail)
+                    .OrderByDescending(o => o.TaskProgress.Min(t => t.DateFrom))
                     .ToList()
                     .Select(order => new OrderViewModel.Order
                     {
@@ -114,6 +115,7 @@ namespace BusinessLogic.Services
                     .AspNetUsers
                     .Find(userId)
                     .Orders
+                    .OrderByDescending(o => o.TaskProgress.Min(t => t.DateFrom))
                     .Select(order => new OrderViewModel.Order()
                     {
                         Id = order.Id,
@@ -170,7 +172,8 @@ namespace BusinessLogic.Services
                                     PartId = d.Parts.PartId,
                                     Price = d.Parts.Price
                                 }).ToList()
-                            }).ToList()// mapper.Map<IEnumerable<TaskProgressDto>>(order.TaskProgress.ToList())
+                            }).ToList(),
+                    TotalCost = order.TaskProgress.Sum(t => t.Price) + order.TaskProgress.Where(t => t.State == (int)OrderStates.WaitingForParts).Sum(t => t.Task_Part.Single().Parts.Price)
                 };
 
                 return model;
@@ -219,12 +222,13 @@ namespace BusinessLogic.Services
             {
                 var mapper = new MapperConfiguration(m => m.CreateMap<TaskProgressDto, TaskProgress>()).CreateMapper();
 
-                context.Orders
-                    .Find(task.OrderId)
-                    .TaskProgress
-                    .OrderBy(t => t.DateFrom)
-                    .Last()
-                    .DateTo = DateTime.Now;
+                var order = context.Orders
+                    .Find(task.OrderId);
+
+                order.TaskProgress
+                     .OrderBy(t => t.DateFrom)
+                     .Last()
+                     .DateTo = DateTime.Now;
 
                 task.DateFrom = DateTime.Now;
                 if (task.State == OrderStates.Done || task.State == OrderStates.Deleted)
@@ -234,7 +238,12 @@ namespace BusinessLogic.Services
                 .Add(mapper.Map<TaskProgress>(task));
 
                 context.SaveChanges();
-                await emailService.SendAsync(context.Orders.Find(task.OrderId).AspNetUsers.Email, "Zmiana statusu zgłoszenia", $"Status zgłoszenia został zmieniony na {task.State.GetAttribute()}.");
+
+                if (task.State == OrderStates.Done)
+                    await emailService.SendAsync(order.AspNetUsers.Email, "Zakończono naprawę", $"Status zgłoszenia został zmieniony na {task.State.GetAttribute()}. Łączny koszt wynosi: {order.TaskProgress.Sum(t => t.Price) + order.TaskProgress.Where(t => t.State == (int)OrderStates.WaitingForParts).Sum(t => t.Task_Part.Single().Parts.Price)}");
+                else
+                    await
+                        emailService.SendAsync(order.AspNetUsers.Email, "Zmiana statusu zgłoszenia", $"Status zgłoszenia został zmieniony na {task.State.GetAttribute()}.");
             }
         }
 
