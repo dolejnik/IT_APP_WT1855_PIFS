@@ -8,14 +8,14 @@
 <hr />
 <div class="panel panel-success" style="-ms-opacity: 0.9; opacity: 0.9; color: black">
     <div class="panel-heading">
-        <h3 class="panel-title">Spis zamówień</h3>
+        <h3 class="panel-title">Spis zgłoszeń</h3>
     </div>
 
     <div class="panel-body">
 
         @if (User.IsInRole("Employee"))
         {
-            @Html.ActionLink("Dodaj zamówienie", "AddOrder", "Order", new {@class = "col-lg-2 btn btn-default"})
+            @Html.ActionLink("Dodaj zgłoszenie", "AddOrder", "Order", new {@class = "col-lg-2 btn btn-default"})
 
             using (Html.BeginForm("AdminIndex", "Order", FormMethod.Get))
             {
