@@ -42,7 +42,7 @@ body {
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("O nas", "About", "Home")</li>
                     <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Zamowienia", "Index", "Order")</li>
+                    <li>@Html.ActionLink("Zgłoszenia", "Index", "Order")</li>
                     @if (User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("AdminPanel", "ManageUserRoles", "UserRoles")</li>
