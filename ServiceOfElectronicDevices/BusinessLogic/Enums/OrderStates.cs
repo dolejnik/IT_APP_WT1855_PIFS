@@ -14,7 +14,7 @@ namespace BusinessLogic.Enums
         Repair,
         [Description("Kontakt z klientem")]
         WaitingForClient,
-        [Description("Do dobioru")]
+        [Description("Do odbioru")]
         Ready,
         [Description("Zakończono")]
         Done,
