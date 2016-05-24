@@ -173,7 +173,7 @@ namespace BusinessLogic.Services
                                     Price = d.Parts.Price
                                 }).ToList()
                             }).ToList(),
-                    TotalCost = order.TaskProgress.Sum(t => t.Price) + order.TaskProgress.Where(t => t.State == (int)OrderStates.WaitingForParts).Sum(t => t.Task_Part.Single().Parts.Price)
+                    TotalCost = order.TaskProgress.Sum(t => t.Price) + order.TaskProgress.Where(t => t.State == (int)OrderStates.WaitingForParts).Sum(t => t.Task_Part.SingleOrDefault()?.Parts.Price)
                 };
 
                 return model;
