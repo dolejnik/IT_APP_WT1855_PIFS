@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\OrderStates.cs" />
+    <Compile Include="Enums\SortOrder.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Models\AspNetRolesDto.cs" />
     <Compile Include="Models\AspNetUsersDto.cs" />

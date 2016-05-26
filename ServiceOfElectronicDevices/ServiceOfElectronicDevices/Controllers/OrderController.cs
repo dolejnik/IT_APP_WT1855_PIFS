@@ -27,19 +27,19 @@ namespace ServiceOfElectronicDevices.Controllers
         }
 
         // GET: Order
-        public ActionResult Index()
+        public ActionResult Index(SortOrder sortOrder = 0, int page = 0, int state = -1, string clientEmail = null)
         {
             if (User.IsInRole("Employee"))
-                return RedirectToAction("AdminIndex");
+                return RedirectToAction("AdminIndex", new {sortOrder, page, state, clientEmail});
 
-            var model = orderService.GetUserOrders(User.Identity.GetUserId());
+            var model = orderService.GetUserOrders(sortOrder, page, User.Identity.GetUserId());
             return View(model);
         }
 
         [Authorize(Roles = "Employee")]
-        public ActionResult AdminIndex(int state = -1, string clientEmail = null)
+        public ActionResult AdminIndex(SortOrder sortOrder = 0, int page = 0, int state = -1, string clientEmail = null)
         {
-            var model = orderService.GetOrderList((OrderStates)state, clientEmail);
+            var model = orderService.GetOrderList(sortOrder, page, (OrderStates)state, clientEmail);
             return View("Index", model);
         }
 

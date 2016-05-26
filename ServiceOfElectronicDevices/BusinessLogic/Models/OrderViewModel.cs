@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
+using BusinessLogic.Enums;
 
 namespace BusinessLogic.Models
 {
     public class OrderViewModel
     {
         public IEnumerable<Order> Orders { get; set; }
+        public int CurrentPageNumber { get; set; }
+        public int NumberOfPages { get; set; }
+        public SortOrder SortOrder { get; set; }
 
         public class Order
         {

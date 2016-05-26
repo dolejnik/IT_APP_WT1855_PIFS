@@ -12,6 +12,8 @@ namespace BusinessLogic.Services
 {
     public class OrderService
     {
+        public const int PageSize = 10;
+
         private SendEmailService emailService;
 
         public OrderService()
@@ -38,6 +40,34 @@ namespace BusinessLogic.Services
                 };
                 context.TaskProgress.Add(taskProgress);
                 context.SaveChanges();
+            }
+        }
+
+        public object GetUserOrders(string userId)
+        {
+            using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
+            {
+                var mapper = new MapperConfiguration(m => m.CreateMap<TaskProgress, TaskProgressDto>()).CreateMapper();
+
+                var orderList = context
+                    .AspNetUsers
+                    .Find(userId)
+                    .Orders
+                    .OrderBy(o => o.TaskProgress.Max(t => t.State))
+                    .ThenByDescending(o => o.TaskProgress.Min(t => t.DateFrom))
+                    .Select(order => new OrderViewModel.Order()
+                    {
+                        Id = order.Id,
+                        ClientName = order.AspNetUsers.UserName,
+                        DeviceModel = order.Devices.Model,
+                        DeviceBrand = order.Devices.Brand,
+                        CurrentState = mapper.Map<TaskProgressDto>(order.TaskProgress.OrderBy(t => t.DateFrom).Last())
+                    })
+                    .ToList();
+                return new OrderViewModel
+                {
+                    Orders = orderList
+                };
             }
         }
 
@@ -81,7 +111,7 @@ namespace BusinessLogic.Services
             }
         }
 
-        public OrderViewModel GetOrderList(OrderStates state, string clientEmail = null)
+        public OrderViewModel GetOrderList(SortOrder sortOrder, int page, OrderStates state, string clientEmail = null)
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
@@ -89,7 +119,7 @@ namespace BusinessLogic.Services
                 var orderList = context
                     .Orders
                     .Where(o => string.IsNullOrEmpty(clientEmail) || o.AspNetUsers.Email == clientEmail)
-                    .OrderByDescending(o => o.TaskProgress.Min(t => t.DateFrom))
+                    .OrderElements(sortOrder)
                     .ToList()
                     .Select(order => new OrderViewModel.Order
                     {
@@ -101,11 +131,18 @@ namespace BusinessLogic.Services
                     })
                     .Where(o => (int)state == -1 || o.CurrentState.State == state)
                     .ToList();
-                return new OrderViewModel { Orders = orderList };
+
+                return new OrderViewModel
+                {
+                    NumberOfPages = orderList.Count() / PageSize,
+                    CurrentPageNumber = page,
+                    SortOrder = sortOrder,
+                    Orders = orderList.Skip(page * PageSize).Take(PageSize)
+                };
             }
         }
 
-        public OrderViewModel GetUserOrders(string userId)
+        public OrderViewModel GetUserOrders(SortOrder sortOrder, int page, string userId)
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
@@ -115,7 +152,7 @@ namespace BusinessLogic.Services
                     .AspNetUsers
                     .Find(userId)
                     .Orders
-                    .OrderByDescending(o => o.TaskProgress.Min(t => t.DateFrom))
+                    .OrderElements(sortOrder)
                     .Select(order => new OrderViewModel.Order()
                     {
                         Id = order.Id,
@@ -125,7 +162,13 @@ namespace BusinessLogic.Services
                         CurrentState = mapper.Map<TaskProgressDto>(order.TaskProgress.OrderBy(t => t.DateFrom).Last())
                     })
                     .ToList();
-                return new OrderViewModel { Orders = orderList };
+                return new OrderViewModel
+                {
+                    NumberOfPages = (int)Math.Ceiling((double)orderList.Count() / PageSize),
+                    CurrentPageNumber = page,
+                    SortOrder = sortOrder,
+                    Orders = orderList.Skip(page * PageSize).Take(PageSize)
+                };
             }
         }
 
@@ -164,7 +207,7 @@ namespace BusinessLogic.Services
                                     Price = t.Price ?? 0.0,
                                     State = (OrderStates)t.State
                                 },
-                                ComponentsList = t.Task_Part.Select(d =>  new PartDto
+                                ComponentsList = t.Task_Part.Select(d => new PartDto
                                 {
                                     Brand = d.Parts.Brand,
                                     Id = d.Parts.Id,
@@ -193,7 +236,7 @@ namespace BusinessLogic.Services
                     context.TaskProgress
                            .Find(taskId)
                            .Task_Part
-                           .Add(new Task_Part { PartId = componentId});
+                           .Add(new Task_Part { PartId = componentId });
                 }
 
                 context.SaveChanges();
@@ -251,31 +294,52 @@ namespace BusinessLogic.Services
         {
             using (var context = new ServiceOfElectronicDevicesDataBaseEntities())
             {
-                 var order = context.Orders
-                                    .SingleOrDefault(o => o.Id == model.OrderId);
+                var order = context.Orders
+                                   .SingleOrDefault(o => o.Id == model.OrderId);
 
-                if(order.TaskProgress.SingleOrDefault(t => t.Id == model.TaskId).DateTo != null)
+                if (order.TaskProgress.SingleOrDefault(t => t.Id == model.TaskId).DateTo != null)
                     return;
 
-                 order.TaskProgress
-                      .SingleOrDefault(t => t.Id == model.TaskId)
-                      .DateTo = DateTime.Now;
+                order.TaskProgress
+                     .SingleOrDefault(t => t.Id == model.TaskId)
+                     .DateTo = DateTime.Now;
 
                 var task = new TaskProgress
                 {
                     DateFrom = DateTime.Now,
-                    State = (int) OrderStates.WaitingForParts
+                    State = (int)OrderStates.WaitingForParts
                 };
                 order.TaskProgress
                      .Add(task);
 
                 context.Task_Part.Add(new Task_Part
                 {
-                    TaskId  = task.Id,
+                    TaskId = task.Id,
                     PartId = model.ComponentId
                 });
 
                 context.SaveChanges();
+            }
+        }
+
+    }
+
+    static class ExtensionMethods
+    {
+        public static IEnumerable<Orders> OrderElements(this IEnumerable<Orders> collection, SortOrder sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case SortOrder.AddDate:
+                    return collection.OrderBy(o => o.TaskProgress.Min(t => t.DateFrom));
+                case SortOrder.AddDateDescending:
+                    return collection.OrderByDescending(o => o.TaskProgress.Min(t => t.DateFrom));
+                case SortOrder.ClientEmail:
+                    return collection.OrderBy(o => o.AspNetUsers.Email);
+                case SortOrder.ClientEmailDescending:
+                    return collection.OrderByDescending(o => o.AspNetUsers.Email);
+                default:
+                    return collection;
             }
         }
     }

@@ -34,10 +34,10 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Klient</th>
+                <th>@Html.ActionLink("Klient", "Index", "Order", new { sortOrder = @Model.SortOrder == SortOrder.ClientEmail ? SortOrder.ClientEmail : SortOrder.ClientEmailDescending }, null)</th>
                 <th>Urządzenie</th>
                 <th>Stan</th>
-                <th>Data rozpoczęcia</th>
+                <th>@Html.ActionLink("Data rozpoczęcia", "Index", "Order", new { sortOrder = @Model.SortOrder == SortOrder.AddDate ? SortOrder.AddDateDescending : SortOrder.AddDate }, null)</th>
                 <th>Opis</th>
                 <th></th>
             </tr>
@@ -75,6 +75,20 @@
             }
             </tbody>
         </table>
+
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.CurrentPageNumber; i++)
+            {
+                <li>@Html.ActionLink(i.ToString(), "Index", "Order", new {page = i - 1, sortOrder = @Model.SortOrder}, null)</li>
+            }
+            <li class="active"><a href="#">@(Model.CurrentPageNumber+1)</a></li>
+            @for (int i = Model.CurrentPageNumber + 1; i <= Model.NumberOfPages; i++)
+            {
+                <li>@Html.ActionLink((i+1).ToString(), "Index", "Order", new { page = i, sortOrder = @Model.SortOrder }, null)</li>
+            }
+
+        </ul>
+
         <hr/>
     </div>
 </div>
